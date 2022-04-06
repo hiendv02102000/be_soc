@@ -1,7 +1,7 @@
 package db
 
 import (
-	"gorm.io/driver/sqlite"
+	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 
 	// import source file
@@ -16,9 +16,8 @@ type Database struct {
 }
 
 func NewDB() (Database, error) {
-	// dsn := "root:123456@tcp(127.0.0.1:3307)/food?charset=utf8mb4&parseTime=True&loc=Local"
-	// db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
-	db, err := gorm.Open(sqlite.Open("food.db"), &gorm.Config{})
+	dsn := "bd72d9de6c3c1e:9c1f2305@tcp(us-cdbr-east-05.cleardb.net)/heroku_b6698d216dd2cb8?charset=utf8mb4&parseTime=True&loc=Local"
+	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	return Database{
 		DB: db,
 	}, err
