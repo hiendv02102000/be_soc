@@ -1,6 +1,8 @@
 package db
 
 import (
+	"backend-food/internal/pkg/domain/domain_model/entity"
+
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 
@@ -23,7 +25,7 @@ func NewDB() (Database, error) {
 	}, err
 }
 func (db *Database) MigrateDBWithGorm() {
-	db.DB.AutoMigrate()
+	db.DB.AutoMigrate(entity.Users{})
 }
 func (db *Database) First(condition interface{}, value interface{}) error {
 	err := db.DB.First(value, condition).Error

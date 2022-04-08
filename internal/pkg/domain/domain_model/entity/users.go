@@ -1,6 +1,8 @@
 package entity
 
-import "time"
+import (
+	"time"
+)
 
 // Users struct
 type Users struct {
@@ -12,4 +14,5 @@ type Users struct {
 	Role           string     `gorm:"column:role"`
 	Token          *string    `gorm:"column:token"`
 	TokenExpriedAt *time.Time `gorm:"column:token_expried_at"`
+	BaseModel
 }
