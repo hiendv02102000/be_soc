@@ -2,11 +2,8 @@ package handler
 
 import (
 	"backend-food/internal/pkg/domain/domain_model/dto"
-	"backend-food/internal/pkg/repository"
-	"backend-food/internal/pkg/usecase"
 	"backend-food/pkg/infrastucture/db"
 	"backend-food/pkg/infrastucture/schema"
-	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -14,15 +11,13 @@ import (
 )
 
 type HTTPHandler struct {
-	Schema  *graphql.Schema
-	usecase *usecase.UserUsecase
+	Schema *graphql.Schema
 }
 
 func NewHTTPHandler(db db.Database) *HTTPHandler {
-	usersRepository := repository.NewUserRepository(db)
-	usersUsecase := usecase.NewUserUsecase(usersRepository)
-	schema := schema.NewSchema()
-	return &HTTPHandler{usecase: usersUsecase, Schema: schema}
+
+	schema := schema.NewAnonymousSchema(db)
+	return &HTTPHandler{Schema: schema}
 }
 
 func (h *HTTPHandler) Handle(c *gin.Context) {
@@ -36,10 +31,16 @@ func (h *HTTPHandler) Handle(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, data)
 		return
 	}
-	fmt.Println(req.Query)
+	//fmt.Println(req.Query)
+	exce := ""
+	if req.Query == "" {
+		exce = req.Query
+	} else {
+		exce = req.Mutation
+	}
 	data := graphql.Do(graphql.Params{
 		Schema:        *h.Schema,
-		RequestString: req.Query,
+		RequestString: exce,
 	})
 	c.JSON(http.StatusOK, data)
 }

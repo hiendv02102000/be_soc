@@ -1,13 +1,16 @@
 package schema
 
 import (
+	"backend-food/pkg/infrastucture/db"
+
 	"github.com/graphql-go/graphql"
 )
 
-func NewSchema() *graphql.Schema {
+func NewAnonymousSchema(database db.Database) *graphql.Schema {
+	repoContainer := GetContainerRepo(database)
 	myschema, _ := graphql.NewSchema(
 		graphql.SchemaConfig{
-			Query: QueryTypes,
+			Query: GetAnonymousQuery(repoContainer),
 		},
 	)
 	return &myschema
