@@ -10,7 +10,8 @@ func NewAnonymousSchema(database db.Database) *graphql.Schema {
 	repoContainer := GetContainerRepo(database)
 	myschema, _ := graphql.NewSchema(
 		graphql.SchemaConfig{
-			Query: GetAnonymousQuery(repoContainer),
+			Query:    GetAnonymousQuery(repoContainer),
+			Mutation: GetAnonymousMutation(repoContainer),
 		},
 	)
 	return &myschema

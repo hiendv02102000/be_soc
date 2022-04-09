@@ -32,12 +32,14 @@ func (h *HTTPHandler) Handle(c *gin.Context) {
 		return
 	}
 	//fmt.Println(req.Query)
+	//fmt.Println(req.Mutation)
 	exce := ""
-	if req.Query == "" {
+	if len(req.Query) > 0 {
 		exce = req.Query
 	} else {
 		exce = req.Mutation
 	}
+	//fmt.Println(exce)
 	data := graphql.Do(graphql.Params{
 		Schema:        *h.Schema,
 		RequestString: exce,

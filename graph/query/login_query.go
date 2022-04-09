@@ -5,8 +5,10 @@ import (
 	"backend-food/graph/output"
 	"backend-food/internal/pkg/domain/domain_model/dto"
 	"backend-food/internal/pkg/domain/domain_model/entity"
-	"backend-food/internal/pkg/repository"
+	"backend-food/internal/pkg/domain/service"
 	"backend-food/pkg/share/middleware"
+	"backend-food/pkg/share/utils"
+	"errors"
 	"time"
 
 	"github.com/graphql-go/graphql"
@@ -32,12 +34,20 @@ func LoginQuery(containerRepo map[string]interface{}) *graphql.Field {
 			},
 		},
 		Resolve: func(p graphql.ResolveParams) (result interface{}, err error) {
+
 			req := p.Args["user"].(map[string]interface{})
 			loginReq := dto.LoginRequest{
 				Username: req["username"].(string),
 				Password: req["password"].(string),
 			}
-			userRepo := containerRepo["user_repository"].(repository.UserRepository)
+
+			err = utils.CheckValidate(loginReq)
+			if err != nil {
+				return
+			}
+			loginReq.Password = utils.EncryptPassword(loginReq.Password)
+			userRepo := containerRepo["user_repository"].(service.UserRepositoryInterface)
+
 			user, err := userRepo.FirstUser(entity.Users{
 				Username: loginReq.Username,
 				Password: loginReq.Password,
@@ -45,9 +55,10 @@ func LoginQuery(containerRepo map[string]interface{}) *graphql.Field {
 			if err != nil {
 				return
 			}
-			// if user.Password != req.Password || user.ID == 0 {
-			// 	return dto.LoginResponse{}, errors.New("Login fail")
-			// }
+			if user.ID == 0 {
+				err = errors.New("Login fail")
+				return
+			}
 			timeNow := time.Now()
 
 			timeExpriedAt := timeNow.Add(time.Hour * 2)
@@ -58,15 +69,21 @@ func LoginQuery(containerRepo map[string]interface{}) *graphql.Field {
 				Authorized: true,
 				ExpriedAt:  timeExpriedAt,
 			})
+
 			if err != nil {
 				return
 			}
+
 			newUser := entity.Users{
 				Token:          &tokenString,
 				TokenExpriedAt: &timeExpriedAt,
 			}
 			err = userRepo.UpdateUser(newUser, user)
-			result = newUser
+			result = map[string]interface{}{
+				"token":            newUser.Token,
+				"token_expried_at": newUser.TokenExpriedAt,
+			}
+
 			return
 		},
 	}
