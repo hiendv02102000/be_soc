@@ -10,17 +10,17 @@ import (
 	"github.com/graphql-go/graphql"
 )
 
-type HTTPHandler struct {
+type HTTPClientHandler struct {
 	Schema *graphql.Schema
 }
 
-func NewHTTPHandler(db db.Database) *HTTPHandler {
+func NewHTTPClientHandler(db db.Database) *HTTPHandler {
 
-	schema := schema.NewAnonymousSchema(db)
+	schema := schema.NewClientSchema(db)
 	return &HTTPHandler{Schema: schema}
 }
 
-func (h *HTTPHandler) Handle(c *gin.Context) {
+func (h *HTTPClientHandler) Handle(c *gin.Context) {
 	req := dto.BaseRequest{}
 	err := c.ShouldBind(&req)
 	if err != nil {
