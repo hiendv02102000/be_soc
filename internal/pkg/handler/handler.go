@@ -53,5 +53,6 @@ func (h *HTTPHandler) Handle(c *gin.Context) {
 		Error:  data.Errors,
 		Result: data.Data,
 	}
+
 	c.JSON(http.StatusOK, resp)
 }

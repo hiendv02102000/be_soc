@@ -15,9 +15,7 @@ require (
 	github.com/go-playground/validator/v10 v10.4.1
 	golang.org/x/sys v0.0.0-20220405210540-1e041c57c461 // indirect
 	google.golang.org/protobuf v1.28.0 // indirect
-	gorm.io/driver/mysql v1.3.3
-// gorm.io/driver/sqlite v1.3.1 // direct
-//gorm.io/gorm v1.23.4 // direct
+	
 )
 
 require github.com/cloudinary/cloudinary-go v1.7.0
