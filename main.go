@@ -1,6 +1,6 @@
 package main
 
-import "backend-food/internal/api/router"
+import "be_soc/internal/api/router"
 
 func main() {
 	r := router.NewRouter()

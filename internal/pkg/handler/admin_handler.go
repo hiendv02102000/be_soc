@@ -1,10 +1,10 @@
 package handler
 
 import (
-	"backend-food/internal/pkg/domain/domain_model/dto"
-	"backend-food/pkg/infrastucture/db"
-	"backend-food/pkg/infrastucture/schema"
+	"be_soc/internal/pkg/domain/domain_model/dto"
+	"be_soc/pkg/infrastucture/schema"
 	"net/http"
+	"ve_soc/pkg/infrastucture/db"
 
 	"github.com/gin-gonic/gin"
 	"github.com/graphql-go/graphql"

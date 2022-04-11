@@ -1,7 +1,7 @@
 package schema
 
 import (
-	"backend-food/graph/mutation"
+	"be_soc/graph/mutation"
 
 	"github.com/graphql-go/graphql"
 )

@@ -1,8 +1,8 @@
 package schema
 
 import (
-	"backend-food/internal/pkg/repository"
-	"backend-food/pkg/infrastucture/db"
+	"be_soc/internal/pkg/repository"
+	"be_soc/pkg/infrastucture/db"
 )
 
 func GetContainerRepo(data db.Database) map[string]interface{} {
