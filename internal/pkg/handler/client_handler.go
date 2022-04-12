@@ -43,6 +43,7 @@ func (h *HTTPClientHandler) Handle(c *gin.Context) {
 	data := graphql.Do(graphql.Params{
 		Schema:        *h.Schema,
 		RequestString: exce,
+		Context:       c,
 	})
 	code := http.StatusOK
 	if len(data.Errors) > 0 {
