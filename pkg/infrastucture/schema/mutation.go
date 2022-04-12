@@ -17,8 +17,11 @@ func GetAnonymousMutation(containerRepo map[string]interface{}) *graphql.Object 
 
 func GetClientMutation(containerRepo map[string]interface{}) *graphql.Object {
 	return graphql.NewObject(graphql.ObjectConfig{
-		Name:   "query",
-		Fields: graphql.Fields{"changeprofile": mutation.ChangeProfileMuitation(containerRepo)},
+		Name: "query",
+		Fields: graphql.Fields{
+			"change_password": mutation.ChangePasswordMutation(containerRepo),
+			"changeprofile":   mutation.ChangeProfileMuitation(containerRepo),
+		},
 	})
 }
 func GetAdminMutation(containerRepo map[string]interface{}) *graphql.Object {

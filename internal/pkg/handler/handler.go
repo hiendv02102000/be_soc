@@ -31,19 +31,18 @@ func (h *HTTPHandler) Handle(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, data)
 		return
 	}
-	//fmt.Println(req.Query)
-	//fmt.Println(req.Mutation)
+
 	exce := ""
 	if len(req.Query) > 0 {
 		exce = req.Query
 	} else {
 		exce = req.Mutation
 	}
-	//fmt.Println(exce)
+
 	data := graphql.Do(graphql.Params{
+		Context:       c,
 		Schema:        *h.Schema,
 		RequestString: exce,
-		Context:       c,
 	})
 	code := http.StatusOK
 	if len(data.Errors) > 0 {
