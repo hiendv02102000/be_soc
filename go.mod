@@ -1,6 +1,7 @@
 module be_soc
 
-go 1.18
+// +heroku goVersion go1.17
+go 1.17
 
 require (
 	github.com/cloudinary/cloudinary-go v1.7.0
