@@ -41,9 +41,10 @@ func ChangeProfileMuitation(containerRepo map[string]interface{}) *graphql.Field
 				return
 			}
 			result = map[string]interface{}{
+				"id":         user.ID,
 				"username":   user.Username,
 				"role":       user.Role,
-				"Changed_at": user.UpdatedAt,
+				"changed_at": user.UpdatedAt,
 				"first_name": user.FirstName,
 				"last_name":  user.LastName,
 			}
