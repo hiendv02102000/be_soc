@@ -7,6 +7,9 @@ func ChangeProfileOutput() *graphql.Object {
 		graphql.ObjectConfig{
 			Name: "ChangeProfileOutput",
 			Fields: graphql.Fields{
+				"id": &graphql.Field{
+					Type: graphql.Int,
+				},
 				"username": &graphql.Field{
 					Type: graphql.String,
 				},
