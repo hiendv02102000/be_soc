@@ -7,6 +7,7 @@ import (
 	"backend-food/internal/pkg/domain/domain_model/entity"
 	"backend-food/internal/pkg/domain/service"
 	"backend-food/pkg/share/middleware"
+	"backend-food/pkg/share/utils"
 
 	"github.com/gin-gonic/gin"
 	"github.com/graphql-go/graphql"
@@ -31,7 +32,10 @@ func ChangeProfileMuitation(containerRepo map[string]interface{}) *graphql.Field
 				LastName:  req["last_name"].(string),
 			}
 			userRepo := containerRepo["user_repository"].(service.UserRepositoryInterface)
-
+			err = utils.CheckValidate(changeProfileReq)
+			if err != nil {
+				return
+			}
 			userRepo.UpdateUser(entity.Users{
 				FirstName: changeProfileReq.FirstName,
 				LastName:  changeProfileReq.LastName,
@@ -45,13 +49,10 @@ func ChangeProfileMuitation(containerRepo map[string]interface{}) *graphql.Field
 				"username":   user.Username,
 				"role":       user.Role,
 				"changed_at": user.UpdatedAt,
-				"first_name": user.FirstName,
-				"last_name":  user.LastName,
+				"first_name": changeProfileReq.FirstName,
+				"last_name":  changeProfileReq.LastName,
 			}
-			// timeNow := time.Now()
 
-			// newUser := entity.Users{Username: loginReq.Username,
-			// 	Password: loginReq.Password}
 			return
 		},
 	}
