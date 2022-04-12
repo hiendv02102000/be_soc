@@ -1,9 +1,9 @@
 package handler
 
 import (
-	"backend-food/internal/pkg/domain/domain_model/dto"
-	"backend-food/pkg/infrastucture/db"
-	"backend-food/pkg/infrastucture/schema"
+	"be_soc/internal/pkg/domain/domain_model/dto"
+	"be_soc/pkg/infrastucture/db"
+	"be_soc/pkg/infrastucture/schema"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -31,7 +31,7 @@ func (h *HTTPHandler) Handle(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, data)
 		return
 	}
-	
+
 	exce := ""
 	if len(req.Query) > 0 {
 		exce = req.Query
@@ -40,7 +40,7 @@ func (h *HTTPHandler) Handle(c *gin.Context) {
 	}
 
 	data := graphql.Do(graphql.Params{
-		Context : c,
+		Context:       c,
 		Schema:        *h.Schema,
 		RequestString: exce,
 	})
@@ -53,5 +53,6 @@ func (h *HTTPHandler) Handle(c *gin.Context) {
 		Error:  data.Errors,
 		Result: data.Data,
 	}
+
 	c.JSON(http.StatusOK, resp)
 }

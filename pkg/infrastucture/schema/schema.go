@@ -1,7 +1,7 @@
 package schema
 
 import (
-	"backend-food/pkg/infrastucture/db"
+	"be_soc/pkg/infrastucture/db"
 
 	"github.com/graphql-go/graphql"
 )
