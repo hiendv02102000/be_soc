@@ -1,7 +1,7 @@
 package schema
 
 import (
-	"backend-food/graph/mutation"
+	"be_soc/graph/mutation"
 
 	"github.com/graphql-go/graphql"
 )
@@ -17,8 +17,11 @@ func GetAnonymousMutation(containerRepo map[string]interface{}) *graphql.Object 
 
 func GetClientMutation(containerRepo map[string]interface{}) *graphql.Object {
 	return graphql.NewObject(graphql.ObjectConfig{
-		Name:   "query",
-		Fields: graphql.Fields{"change_profile": mutation.ChangeProfileMuitation(containerRepo)},
+		Name: "query",
+		Fields: graphql.Fields{
+			"change_password": mutation.ChangePasswordMutation(containerRepo),
+			"change_profile":  mutation.ChangeProfileMuitation(containerRepo),
+		},
 	})
 }
 func GetAdminMutation(containerRepo map[string]interface{}) *graphql.Object {

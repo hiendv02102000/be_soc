@@ -1,9 +1,10 @@
 package db
 
 import (
-	"backend-food/internal/pkg/domain/domain_model/entity"
 
 	// import source file
+	"be_soc/internal/pkg/domain/domain_model/entity"
+
 	_ "github.com/golang-migrate/migrate/v4/source/file"
 
 	"github.com/jinzhu/gorm"

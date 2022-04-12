@@ -1,7 +1,7 @@
 package schema
 
 import (
-	"backend-food/graph/query"
+	"be_soc/graph/query"
 
 	"github.com/graphql-go/graphql"
 )

@@ -1,12 +1,12 @@
 package mutation
 
 import (
-	"backend-food/graph/input"
-	"backend-food/graph/output"
-	"backend-food/internal/pkg/domain/domain_model/dto"
-	"backend-food/internal/pkg/domain/domain_model/entity"
-	"backend-food/internal/pkg/domain/service"
-	"backend-food/pkg/share/utils"
+	"be_soc/graph/input"
+	"be_soc/graph/output"
+	"be_soc/internal/pkg/domain/domain_model/dto"
+	"be_soc/internal/pkg/domain/domain_model/entity"
+	"be_soc/internal/pkg/domain/service"
+	"be_soc/pkg/share/utils"
 	"errors"
 
 	"github.com/graphql-go/graphql"
@@ -31,7 +31,10 @@ func CreateUserMutation(containerRepo map[string]interface{}) *graphql.Field {
 				LastName:  req["last_name"].(string),
 			}
 			userRepo := containerRepo["user_repository"].(service.UserRepositoryInterface)
-
+			err = utils.CheckValidate(createUserReq)
+			if err != nil {
+				return
+			}
 			user, err := userRepo.FirstUser(entity.Users{
 				Username: createUserReq.Username,
 			})
