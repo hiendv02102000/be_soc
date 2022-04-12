@@ -82,6 +82,7 @@ func LoginQuery(containerRepo map[string]interface{}) *graphql.Field {
 			result = map[string]interface{}{
 				"token":            newUser.Token,
 				"token_expried_at": newUser.TokenExpriedAt,
+				"role":             user.Role,
 			}
 
 			return

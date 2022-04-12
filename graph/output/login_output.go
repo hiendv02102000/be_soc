@@ -13,6 +13,9 @@ func LoginOutput() *graphql.Object {
 				"token_expried_at": &graphql.Field{
 					Type: graphql.DateTime,
 				},
+				"role": &graphql.Field{
+					Type: graphql.String,
+				},
 			},
 		},
 	)
