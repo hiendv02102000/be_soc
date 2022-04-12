@@ -1,12 +1,13 @@
 package mutation
 
 import (
-	"backend-food/graph/input"
-	"backend-food/graph/output"
-	"backend-food/internal/pkg/domain/domain_model/dto"
-	"backend-food/internal/pkg/domain/domain_model/entity"
-	"backend-food/internal/pkg/domain/service"
-	"backend-food/pkg/share/middleware"
+	"be_soc/graph/input"
+	"be_soc/graph/output"
+	"be_soc/internal/pkg/domain/domain_model/dto"
+	"be_soc/internal/pkg/domain/domain_model/entity"
+	"be_soc/internal/pkg/domain/service"
+	"be_soc/pkg/share/middleware"
+	"be_soc/pkg/share/utils"
 
 	"github.com/gin-gonic/gin"
 	"github.com/graphql-go/graphql"
@@ -31,7 +32,10 @@ func ChangeProfileMuitation(containerRepo map[string]interface{}) *graphql.Field
 				LastName:  req["last_name"].(string),
 			}
 			userRepo := containerRepo["user_repository"].(service.UserRepositoryInterface)
-
+			err = utils.CheckValidate(changeProfileReq)
+			if err != nil {
+				return
+			}
 			userRepo.UpdateUser(entity.Users{
 				FirstName: changeProfileReq.FirstName,
 				LastName:  changeProfileReq.LastName,

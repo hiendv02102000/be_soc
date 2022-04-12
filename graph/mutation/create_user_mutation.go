@@ -31,7 +31,10 @@ func CreateUserMutation(containerRepo map[string]interface{}) *graphql.Field {
 				LastName:  req["last_name"].(string),
 			}
 			userRepo := containerRepo["user_repository"].(service.UserRepositoryInterface)
-
+			err = utils.CheckValidate(createUserReq)
+			if err != nil {
+				return
+			}
 			user, err := userRepo.FirstUser(entity.Users{
 				Username: createUserReq.Username,
 			})
