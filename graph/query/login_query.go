@@ -32,10 +32,10 @@ func LoginQuery(containerRepo map[string]interface{}) *graphql.Field {
 				Password: req["password"].(string),
 			}
 
-			// err = utils.CheckValidate(loginReq)
-			// if err != nil {
-			// 	return
-			// }
+			err = utils.CheckValidate(loginReq)
+			if err != nil {
+				return
+			}
 			loginReq.Password = utils.EncryptPassword(loginReq.Password)
 			userRepo := containerRepo["user_repository"].(service.UserRepositoryInterface)
 
