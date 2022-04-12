@@ -41,6 +41,7 @@ func (h *HTTPAdminHandler) Handle(c *gin.Context) {
 	}
 	//fmt.Println(exce)
 	data := graphql.Do(graphql.Params{
+		Context : c,
 		Schema:        *h.Schema,
 		RequestString: exce,
 	})

@@ -15,12 +15,14 @@ require (
 	github.com/go-playground/validator/v10 v10.4.1
 	golang.org/x/sys v0.0.0-20220405210540-1e041c57c461 // indirect
 	google.golang.org/protobuf v1.28.0 // indirect
-	gorm.io/driver/mysql v1.3.3
 // gorm.io/driver/sqlite v1.3.1 // direct
 //gorm.io/gorm v1.23.4 // direct
 )
 
-require github.com/cloudinary/cloudinary-go v1.7.0
+require (
+	github.com/cloudinary/cloudinary-go v1.7.0
+	github.com/jinzhu/gorm v1.9.16
+)
 
 require (
 	github.com/creasty/defaults v1.5.1 // indirect
@@ -30,7 +32,6 @@ require (
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/google/uuid v1.3.0 // indirect
 	github.com/gorilla/schema v1.2.0 // indirect
-	github.com/jinzhu/gorm v1.9.16 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.4 // indirect
 	github.com/json-iterator/go v1.1.10 // indirect

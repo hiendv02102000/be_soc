@@ -25,6 +25,7 @@ func (h *HTTPClientHandler) Handle(c *gin.Context) {
 	err := c.ShouldBind(&req)
 	if err != nil {
 		data := dto.BaseResponse{
+			
 			Status: http.StatusBadRequest,
 			Error:  err.Error(),
 		}
@@ -41,6 +42,7 @@ func (h *HTTPClientHandler) Handle(c *gin.Context) {
 	}
 	//fmt.Println(exce)
 	data := graphql.Do(graphql.Params{
+		Context : c,
 		Schema:        *h.Schema,
 		RequestString: exce,
 	})
