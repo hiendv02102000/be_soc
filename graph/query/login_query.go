@@ -19,15 +19,6 @@ func LoginQuery(containerRepo map[string]interface{}) *graphql.Field {
 	return &graphql.Field{
 		Type:        output.LoginOutput(),
 		Description: "User Login",
-		// Args: graphql.FieldConfigArgument{
-		// 	"username": &graphql.ArgumentConfig{
-		// 		Type: graphql.String,
-		// 	},
-		// 	"password": &graphql.ArgumentConfig{
-		// 		Type: graphql.NewInputObject(),
-		// 	},
-		//
-		// },
 		Args: graphql.FieldConfigArgument{
 			"user": &graphql.ArgumentConfig{
 				Type: input.LoginInput(),
@@ -41,10 +32,10 @@ func LoginQuery(containerRepo map[string]interface{}) *graphql.Field {
 				Password: req["password"].(string),
 			}
 
-			err = utils.CheckValidate(loginReq)
-			if err != nil {
-				return
-			}
+			// err = utils.CheckValidate(loginReq)
+			// if err != nil {
+			// 	return
+			// }
 			loginReq.Password = utils.EncryptPassword(loginReq.Password)
 			userRepo := containerRepo["user_repository"].(service.UserRepositoryInterface)
 

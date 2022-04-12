@@ -49,13 +49,10 @@ func ChangeProfileMuitation(containerRepo map[string]interface{}) *graphql.Field
 				"username":   user.Username,
 				"role":       user.Role,
 				"changed_at": user.UpdatedAt,
-				"first_name": user.FirstName,
-				"last_name":  user.LastName,
+				"first_name": changeProfileReq.FirstName,
+				"last_name":  changeProfileReq.LastName,
 			}
-			// timeNow := time.Now()
 
-			// newUser := entity.Users{Username: loginReq.Username,
-			// 	Password: loginReq.Password}
 			return
 		},
 	}
