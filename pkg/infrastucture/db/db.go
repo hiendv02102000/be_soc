@@ -26,6 +26,12 @@ func NewDB() (Database, error) {
 func (db *Database) MigrateDBWithGorm() {
 	db.DB.AutoMigrate(entity.Users{})
 	db.DB.AutoMigrate(entity.Comments{})
+	db.DB.AutoMigrate(entity.Categories{})
+	db.DB.AutoMigrate(entity.Novels{})
+	db.DB.AutoMigrate(entity.Chapters{})
+	db.DB.AutoMigrate(entity.CommentsChapters{})
+	db.DB.AutoMigrate(entity.UsersNovels{})
+	db.DB.AutoMigrate(entity.NovelsCategories{})
 
 }
 

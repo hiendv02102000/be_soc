@@ -21,6 +21,5 @@ type Users struct {
 	Role           roleAllowed `gorm:"column:role" sql:"type:role_name"`
 	Token          *string     `gorm:"column:token"`
 	TokenExpriedAt *time.Time  `gorm:"column:token_expried_at"`
-	Comments       []Comments  `gorm:"foreignKey:users_id;references:id"`
 	BaseModel
 }
