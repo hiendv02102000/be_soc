@@ -10,7 +10,7 @@ func LoginOutput() *graphql.Object {
 				"token": &graphql.Field{
 					Type: graphql.String,
 				},
-				"token_expried_at": &graphql.Field{
+				"token_expired_at": &graphql.Field{
 					Type: graphql.DateTime,
 				},
 				"role": &graphql.Field{
