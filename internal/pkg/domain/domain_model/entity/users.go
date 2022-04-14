@@ -20,6 +20,6 @@ type Users struct {
 	Password       string      `gorm:"column:password;not null"`
 	Role           roleAllowed `gorm:"column:role" sql:"type:role_name"`
 	Token          *string     `gorm:"column:token"`
-	TokenExpriedAt *time.Time  `gorm:"column:token_expried_at"`
+	TokenExpriedAt *time.Time  `gorm:"column:token_expired_at"`
 	BaseModel
 }
