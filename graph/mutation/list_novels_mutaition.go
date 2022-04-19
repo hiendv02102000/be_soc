@@ -36,13 +36,12 @@ func ListNovelsMutation(containerRepo map[string]interface{}) *graphql.Field {
 			categories, err := categoriesRepo.FirstCategories(entity.Categories{
 				Name: listNovelsReq.Categories,
 			})
-			novelcate, err := novelscateRepo.FindNovelsCategoriesList(entity.NovelsCategories{
+			_, _ = novelscateRepo.FindNovelsCategoriesList(entity.NovelsCategories{
 				CategoriesID: categories.ID,
 			})
 			novel, err := novelRepo.FindNovelList(entity.Novels{
 				Name:    listNovelsReq.Name,
 				UsersID: listNovelsReq.UserID,
-				ID:      novelcate.ID,
 			})
 
 			listnovels := make([]map[string]interface{}, 0)

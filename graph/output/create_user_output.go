@@ -7,16 +7,19 @@ func CreateUserOutput() *graphql.Object {
 		graphql.ObjectConfig{
 			Name: "LoginOutput",
 			Fields: graphql.Fields{
-				"username": &graphql.Field{
+				"id": &graphql.Field{
+					Type: graphql.Int,
+				},
+				"name": &graphql.Field{
 					Type: graphql.String,
 				},
-				"first_name": &graphql.Field{
+				"user": &graphql.Field{
 					Type: graphql.String,
 				},
-				"last_name": &graphql.Field{
+				"categories": &graphql.Field{
 					Type: graphql.String,
 				},
-				"role": &graphql.Field{
+				"img_url": &graphql.Field{
 					Type: graphql.String,
 				},
 				"created_at": &graphql.Field{
