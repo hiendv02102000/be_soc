@@ -1,4 +1,4 @@
-package mutation
+package query
 
 import (
 	"be_soc/graph/input"
@@ -16,65 +16,92 @@ func ListNovelsMutation(containerRepo map[string]interface{}) *graphql.Field {
 		Description: "ListNovelOutput",
 
 		Args: graphql.FieldConfigArgument{
-			"user": &graphql.ArgumentConfig{
+			"novel": &graphql.ArgumentConfig{
 				Type: input.ListNovelsInput(),
 			},
 		},
 		Resolve: func(p graphql.ResolveParams) (result interface{}, err error) {
-			//arr := make([]map[string]interface{}, 0)
-			req := p.Args["user"].(map[string]interface{})
-			listNovelsReq := dto.ListNovelsRequest{
-				Name:          req["name"].(string),
-				Categories:    req["categories"].(string),
-				UserID:        req["user_id"].(int),
-				Isgetchapters: req["is_get_chapters"].(bool),
+			req := p.Args["novel"].(map[string]interface{})
+			listNovelsReq := dto.ListNovelsRequest{}
+			if req["id"] != nil {
+				listNovelsReq.ID = req["id"].(int)
 			}
+			if req["name"] != nil {
+				listNovelsReq.Name = req["name"].(string)
+			}
+			if req["categories"] != nil {
+				listNovelsReq.Categories = req["categories"].(string)
+			}
+			if req["user_id"] != nil {
+				listNovelsReq.UserID = req["user_id"].(int)
+			}
+			if req["is_get_chapters"] != nil {
+				listNovelsReq.Isgetchapters = req["is_get_chapters"].(bool)
+			}
+
 			novelRepo := containerRepo["novel_repository"].(service.NovelRepositoryInterface)
 			chaptersRepo := containerRepo["chapters_repository"].(service.ChaptersRepositoryInterface)
 			categoriesRepo := containerRepo["categories_repository"].(service.CategoriesRepositoryInterface)
 			novelscateRepo := containerRepo["novelscategories_repository"].(service.NovelsCategoriesRepositoryInterface)
-			categories, err := categoriesRepo.FirstCategories(entity.Categories{
-				Name: listNovelsReq.Categories,
-			})
-			_, _ = novelscateRepo.FindNovelsCategoriesList(entity.NovelsCategories{
-				CategoriesID: categories.ID,
-			})
 			novel, err := novelRepo.FindNovelList(entity.Novels{
+				ID:      listNovelsReq.ID,
 				Name:    listNovelsReq.Name,
 				UsersID: listNovelsReq.UserID,
 			})
+			if listNovelsReq.Categories != "" {
+				search := []entity.Novels{}
+				categories, err0 := categoriesRepo.FirstCategorie(entity.Categories{
+					Name: listNovelsReq.Categories,
+				})
+				if err0 != nil {
+					return
+				}
+				novelcate, err00 := novelscateRepo.FindNovelsCategoriesList(entity.NovelsCategories{
+					CategoriesID: categories.ID,
+				})
 
+				if err00 != nil {
+					return
+				}
+				for i := 0; i < len(novel); i++ {
+					for j := 0; j < len(novelcate); j++ {
+						if novel[i].ID == novelcate[j].NovelsID {
+							search = append(search, novel[i])
+							break
+						}
+
+					}
+				}
+				novel = search
+			}
 			listnovels := make([]map[string]interface{}, 0)
 			for i := 0; i < len(novel); i++ {
 				cates := make([]map[string]interface{}, 0)
 				chapters := make([]map[string]interface{}, 0)
-				for i := 0; i < len(novel); i++ {
-					nocate, err2 := novelscateRepo.FindNovelsCategoriesList(entity.NovelsCategories{
-						NovelsID: novel[i].ID,
+				nocate, err2 := novelscateRepo.FindNovelsCategoriesList(entity.NovelsCategories{
+					NovelsID: novel[i].ID,
+				})
+				if err2 != nil {
+					err = err2
+					return
+				}
+				for i := 0; i < len(nocate); i++ {
+					c, err3 := categoriesRepo.FirstCategorie(entity.Categories{
+						ID: nocate[i].CategoriesID,
 					})
 					if err2 != nil {
-						err = err2
+						err = err3
 						return
 					}
-					for i := 0; i < len(nocate); i++ {
-						c, err3 := categoriesRepo.FirstCategories(entity.Categories{
-							ID: nocate[i].CategoriesID,
-						})
-						if err2 != nil {
-							err = err3
-							return
-						}
-						categories := map[string]interface{}{
-							"name": c.Name,
-						}
-						cates = append(cates, categories)
+					categories := map[string]interface{}{
+						"name": c.Name,
 					}
+					cates = append(cates, categories)
 				}
 				if listNovelsReq.Isgetchapters {
 					chapter, err1 := chaptersRepo.FindChaptersList(entity.Chapters{
 						NovelsID: novel[i].ID,
 					})
-					//fmt.Println(chapter)
 					if err1 != nil {
 						err = err1
 						return

@@ -24,8 +24,10 @@ func GetAnonymousQuery(containerRepo map[string]interface{}) *graphql.Object {
 
 func GetClientQuery(containerRepo map[string]interface{}) *graphql.Object {
 	return graphql.NewObject(graphql.ObjectConfig{
-		Name:   "query",
-		Fields: graphql.Fields{},
+		Name: "query",
+		Fields: graphql.Fields{
+			"list_novels": query.ListNovelsMutation(containerRepo),
+		},
 	})
 }
 func GetAdminQuery(containerRepo map[string]interface{}) *graphql.Object {

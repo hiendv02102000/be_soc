@@ -6,6 +6,9 @@ func ListNovelsInput() *graphql.InputObject {
 	return graphql.NewInputObject(graphql.InputObjectConfig{
 		Name: "ListNovelsInput",
 		Fields: graphql.InputObjectConfigFieldMap{
+			"id": &graphql.InputObjectFieldConfig{
+				Type: graphql.Int,
+			},
 			"user_id": &graphql.InputObjectFieldConfig{
 				Type: graphql.Int,
 			},

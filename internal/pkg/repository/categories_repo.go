@@ -9,9 +9,13 @@ type CategoriesRepository struct {
 	DB db.Database
 }
 
-func (u *CategoriesRepository) FirstCategories(condition entity.Categories) (entity.Categories, error) {
+func (u *CategoriesRepository) FirstCategorie(condition entity.Categories) (entity.Categories, error) {
 	categories := entity.Categories{}
 	err := u.DB.First(condition, &categories)
+	return categories, err
+}
+func (u *CategoriesRepository) FindCategories(condition entity.Categories) (categories []entity.Categories, err error) {
+	err = u.DB.Find(condition, &categories)
 	return categories, err
 }
 func NewCategoriesRepository(db db.Database) *CategoriesRepository {
