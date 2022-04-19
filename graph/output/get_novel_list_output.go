@@ -2,15 +2,15 @@ package output
 
 import "github.com/graphql-go/graphql"
 
-func ListNovelsOutput() *graphql.Object {
+func NovelListOutput() *graphql.Object {
 	return graphql.NewObject(
 		graphql.ObjectConfig{
-			Name: "ListNovelsOutput",
+			Name: "NovelListOutput",
 			Fields: graphql.Fields{
 				"list": &graphql.Field{
 					Type: &graphql.List{OfType: graphql.NewObject(
 						graphql.ObjectConfig{
-							Name: "ListNovel",
+							Name: "NovelList",
 							Fields: graphql.Fields{
 								"id": &graphql.Field{
 									Type: graphql.Int,

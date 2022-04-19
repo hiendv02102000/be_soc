@@ -1,7 +1,7 @@
 package dto
 
 // LoginResponse struct
-type ListNovelsRequest struct {
+type NovelListRequest struct {
 	ID            int    `json:"id"`
 	Name          string `json:"name"`
 	Categories    string `json:"categories"`
