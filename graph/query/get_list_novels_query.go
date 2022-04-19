@@ -10,7 +10,7 @@ import (
 	"github.com/graphql-go/graphql"
 )
 
-func ListNovelsMutation(containerRepo map[string]interface{}) *graphql.Field {
+func GetListNovelsQuery(containerRepo map[string]interface{}) *graphql.Field {
 	return &graphql.Field{
 		Type:        output.ListNovelsOutput(),
 		Description: "ListNovelOutput",
@@ -50,7 +50,7 @@ func ListNovelsMutation(containerRepo map[string]interface{}) *graphql.Field {
 			})
 			if listNovelsReq.Categories != "" {
 				search := []entity.Novels{}
-				categories, err0 := categoriesRepo.FirstCategorie(entity.Categories{
+				categories, err0 := categoriesRepo.FirstCategory(entity.Categories{
 					Name: listNovelsReq.Categories,
 				})
 				if err0 != nil {
@@ -86,7 +86,7 @@ func ListNovelsMutation(containerRepo map[string]interface{}) *graphql.Field {
 					return
 				}
 				for i := 0; i < len(nocate); i++ {
-					c, err3 := categoriesRepo.FirstCategorie(entity.Categories{
+					c, err3 := categoriesRepo.FirstCategory(entity.Categories{
 						ID: nocate[i].CategoriesID,
 					})
 					if err2 != nil {
