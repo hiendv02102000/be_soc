@@ -21,7 +21,6 @@ func GetClientMutation(containerRepo map[string]interface{}) *graphql.Object {
 		Fields: graphql.Fields{
 			"change_password": mutation.ChangePasswordMutation(containerRepo),
 			"change_profile":  mutation.ChangeProfileMuitation(containerRepo),
-			"list_novels":     mutation.ListNovelsMutation(containerRepo),
 		},
 	})
 }

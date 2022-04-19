@@ -1,4 +1,4 @@
-package mutation
+package query
 
 import (
 	"be_soc/graph/input"
@@ -16,30 +16,41 @@ func ListNovelsMutation(containerRepo map[string]interface{}) *graphql.Field {
 		Description: "ListNovelOutput",
 
 		Args: graphql.FieldConfigArgument{
-			"user": &graphql.ArgumentConfig{
+			"novel": &graphql.ArgumentConfig{
 				Type: input.ListNovelsInput(),
 			},
 		},
 		Resolve: func(p graphql.ResolveParams) (result interface{}, err error) {
-			//arr := make([]map[string]interface{}, 0)
-			req := p.Args["user"].(map[string]interface{})
-			listNovelsReq := dto.ListNovelsRequest{
-				Name:          req["name"].(string),
-				Categories:    req["categories"].(string),
-				UserID:        req["user_id"].(int),
-				Isgetchapters: req["is_get_chapters"].(bool),
+			req := p.Args["novel"].(map[string]interface{})
+			listNovelsReq := dto.ListNovelsRequest{}
+			if req["id"] != nil {
+				listNovelsReq.ID = req["id"].(int)
 			}
+			if req["name"] != nil {
+				listNovelsReq.Name = req["name"].(string)
+			}
+			if req["categories"] != nil {
+				listNovelsReq.Categories = req["categories"].(string)
+			}
+			if req["user_id"] != nil {
+				listNovelsReq.UserID = req["user_id"].(int)
+			}
+			if req["is_get_chapters"] != nil {
+				listNovelsReq.Isgetchapters = req["is_get_chapters"].(bool)
+			}
+
 			novelRepo := containerRepo["novel_repository"].(service.NovelRepositoryInterface)
 			chaptersRepo := containerRepo["chapters_repository"].(service.ChaptersRepositoryInterface)
 			categoriesRepo := containerRepo["categories_repository"].(service.CategoriesRepositoryInterface)
 			novelscateRepo := containerRepo["novelscategories_repository"].(service.NovelsCategoriesRepositoryInterface)
 			novel, err := novelRepo.FindNovelList(entity.Novels{
+				ID:      listNovelsReq.ID,
 				Name:    listNovelsReq.Name,
 				UsersID: listNovelsReq.UserID,
 			})
 			if listNovelsReq.Categories != "" {
 				search := []entity.Novels{}
-				categories, err0 := categoriesRepo.FirstCategories(entity.Categories{
+				categories, err0 := categoriesRepo.FirstCategorie(entity.Categories{
 					Name: listNovelsReq.Categories,
 				})
 				if err0 != nil {
@@ -75,7 +86,7 @@ func ListNovelsMutation(containerRepo map[string]interface{}) *graphql.Field {
 					return
 				}
 				for i := 0; i < len(nocate); i++ {
-					c, err3 := categoriesRepo.FirstCategories(entity.Categories{
+					c, err3 := categoriesRepo.FirstCategorie(entity.Categories{
 						ID: nocate[i].CategoriesID,
 					})
 					if err2 != nil {
