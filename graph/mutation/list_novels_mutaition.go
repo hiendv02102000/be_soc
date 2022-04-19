@@ -33,49 +33,64 @@ func ListNovelsMutation(containerRepo map[string]interface{}) *graphql.Field {
 			chaptersRepo := containerRepo["chapters_repository"].(service.ChaptersRepositoryInterface)
 			categoriesRepo := containerRepo["categories_repository"].(service.CategoriesRepositoryInterface)
 			novelscateRepo := containerRepo["novelscategories_repository"].(service.NovelsCategoriesRepositoryInterface)
-			categories, err := categoriesRepo.FirstCategories(entity.Categories{
-				Name: listNovelsReq.Categories,
-			})
-			novelcate, err := novelscateRepo.FindNovelsCategoriesList(entity.NovelsCategories{
-				CategoriesID: categories.ID,
-			})
 			novel, err := novelRepo.FindNovelList(entity.Novels{
 				Name:    listNovelsReq.Name,
 				UsersID: listNovelsReq.UserID,
-				ID:      novelcate.ID,
 			})
+			if listNovelsReq.Categories != "" {
+				search := []entity.Novels{}
+				categories, err0 := categoriesRepo.FirstCategories(entity.Categories{
+					Name: listNovelsReq.Categories,
+				})
+				if err0 != nil {
+					return
+				}
+				novelcate, err00 := novelscateRepo.FindNovelsCategoriesList(entity.NovelsCategories{
+					CategoriesID: categories.ID,
+				})
 
+				if err00 != nil {
+					return
+				}
+				for i := 0; i < len(novel); i++ {
+					for j := 0; j < len(novelcate); j++ {
+						if novel[i].ID == novelcate[j].NovelsID {
+							search = append(search, novel[i])
+							break
+						}
+
+					}
+				}
+				novel = search
+			}
 			listnovels := make([]map[string]interface{}, 0)
 			for i := 0; i < len(novel); i++ {
 				cates := make([]map[string]interface{}, 0)
 				chapters := make([]map[string]interface{}, 0)
-				for i := 0; i < len(novel); i++ {
-					nocate, err2 := novelscateRepo.FindNovelsCategoriesList(entity.NovelsCategories{
-						NovelsID: novel[i].ID,
+				nocate, err2 := novelscateRepo.FindNovelsCategoriesList(entity.NovelsCategories{
+					NovelsID: novel[i].ID,
+				})
+				if err2 != nil {
+					err = err2
+					return
+				}
+				for i := 0; i < len(nocate); i++ {
+					c, err3 := categoriesRepo.FirstCategories(entity.Categories{
+						ID: nocate[i].CategoriesID,
 					})
 					if err2 != nil {
-						err = err2
+						err = err3
 						return
 					}
-					for i := 0; i < len(nocate); i++ {
-						c, err3 := categoriesRepo.FirstCategories(entity.Categories{
-							ID: nocate[i].CategoriesID,
-						})
-						if err2 != nil {
-							err = err3
-							return
-						}
-						categories := map[string]interface{}{
-							"name": c.Name,
-						}
-						cates = append(cates, categories)
+					categories := map[string]interface{}{
+						"name": c.Name,
 					}
+					cates = append(cates, categories)
 				}
 				if listNovelsReq.Isgetchapters {
 					chapter, err1 := chaptersRepo.FindChaptersList(entity.Chapters{
 						NovelsID: novel[i].ID,
 					})
-					//fmt.Println(chapter)
 					if err1 != nil {
 						err = err1
 						return

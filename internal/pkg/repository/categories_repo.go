@@ -14,6 +14,10 @@ func (u *CategoriesRepository) FirstCategories(condition entity.Categories) (ent
 	err := u.DB.First(condition, &categories)
 	return categories, err
 }
+func (u *CategoriesRepository) FindCategories(condition entity.Categories) (categories []entity.Categories, err error) {
+	err = u.DB.Find(condition, &categories)
+	return categories, err
+}
 func NewCategoriesRepository(db db.Database) *CategoriesRepository {
 	return &CategoriesRepository{
 		DB: db,
