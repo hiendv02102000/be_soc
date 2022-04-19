@@ -2,9 +2,9 @@ package input
 
 import "github.com/graphql-go/graphql"
 
-func ListNovelsInput() *graphql.InputObject {
+func NovelListInput() *graphql.InputObject {
 	return graphql.NewInputObject(graphql.InputObjectConfig{
-		Name: "ListNovelsInput",
+		Name: "NovelListInput",
 		Fields: graphql.InputObjectConfigFieldMap{
 			"id": &graphql.InputObjectFieldConfig{
 				Type: graphql.Int,

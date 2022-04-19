@@ -9,7 +9,7 @@ type CategoriesRepository struct {
 	DB db.Database
 }
 
-func (u *CategoriesRepository) FirstCategorie(condition entity.Categories) (entity.Categories, error) {
+func (u *CategoriesRepository) FirstCategory(condition entity.Categories) (entity.Categories, error) {
 	categories := entity.Categories{}
 	err := u.DB.First(condition, &categories)
 	return categories, err

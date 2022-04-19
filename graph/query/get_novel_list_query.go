@@ -6,37 +6,38 @@ import (
 	"be_soc/internal/pkg/domain/domain_model/dto"
 	"be_soc/internal/pkg/domain/domain_model/entity"
 	"be_soc/internal/pkg/domain/service"
+	"fmt"
 
 	"github.com/graphql-go/graphql"
 )
 
-func ListNovelsMutation(containerRepo map[string]interface{}) *graphql.Field {
+func GetNovelListQuery(containerRepo map[string]interface{}) *graphql.Field {
 	return &graphql.Field{
-		Type:        output.ListNovelsOutput(),
-		Description: "ListNovelOutput",
+		Type:        output.NovelListOutput(),
+		Description: "NovelListOutput",
 
 		Args: graphql.FieldConfigArgument{
 			"novel": &graphql.ArgumentConfig{
-				Type: input.ListNovelsInput(),
+				Type: input.NovelListInput(),
 			},
 		},
 		Resolve: func(p graphql.ResolveParams) (result interface{}, err error) {
 			req := p.Args["novel"].(map[string]interface{})
-			listNovelsReq := dto.ListNovelsRequest{}
+			NovelListReq := dto.NovelListRequest{}
 			if req["id"] != nil {
-				listNovelsReq.ID = req["id"].(int)
+				NovelListReq.ID = req["id"].(int)
 			}
 			if req["name"] != nil {
-				listNovelsReq.Name = req["name"].(string)
+				NovelListReq.Name = req["name"].(string)
 			}
 			if req["categories"] != nil {
-				listNovelsReq.Categories = req["categories"].(string)
+				NovelListReq.Categories = req["categories"].(string)
 			}
 			if req["user_id"] != nil {
-				listNovelsReq.UserID = req["user_id"].(int)
+				NovelListReq.UserID = req["user_id"].(int)
 			}
 			if req["is_get_chapters"] != nil {
-				listNovelsReq.Isgetchapters = req["is_get_chapters"].(bool)
+				NovelListReq.Isgetchapters = req["is_get_chapters"].(bool)
 			}
 
 			novelRepo := containerRepo["novel_repository"].(service.NovelRepositoryInterface)
@@ -44,14 +45,14 @@ func ListNovelsMutation(containerRepo map[string]interface{}) *graphql.Field {
 			categoriesRepo := containerRepo["categories_repository"].(service.CategoriesRepositoryInterface)
 			novelscateRepo := containerRepo["novelscategories_repository"].(service.NovelsCategoriesRepositoryInterface)
 			novel, err := novelRepo.FindNovelList(entity.Novels{
-				ID:      listNovelsReq.ID,
-				Name:    listNovelsReq.Name,
-				UsersID: listNovelsReq.UserID,
+				ID:      NovelListReq.ID,
+				Name:    NovelListReq.Name,
+				UsersID: NovelListReq.UserID,
 			})
-			if listNovelsReq.Categories != "" {
+			if NovelListReq.Categories != "" {
 				search := []entity.Novels{}
-				categories, err0 := categoriesRepo.FirstCategorie(entity.Categories{
-					Name: listNovelsReq.Categories,
+				categories, err0 := categoriesRepo.FirstCategory(entity.Categories{
+					Name: NovelListReq.Categories,
 				})
 				if err0 != nil {
 					return
@@ -74,7 +75,7 @@ func ListNovelsMutation(containerRepo map[string]interface{}) *graphql.Field {
 				}
 				novel = search
 			}
-			listnovels := make([]map[string]interface{}, 0)
+			novellist := make([]map[string]interface{}, 0)
 			for i := 0; i < len(novel); i++ {
 				cates := make([]map[string]interface{}, 0)
 				chapters := make([]map[string]interface{}, 0)
@@ -86,7 +87,7 @@ func ListNovelsMutation(containerRepo map[string]interface{}) *graphql.Field {
 					return
 				}
 				for i := 0; i < len(nocate); i++ {
-					c, err3 := categoriesRepo.FirstCategorie(entity.Categories{
+					c, err3 := categoriesRepo.FirstCategory(entity.Categories{
 						ID: nocate[i].CategoriesID,
 					})
 					if err2 != nil {
@@ -98,7 +99,7 @@ func ListNovelsMutation(containerRepo map[string]interface{}) *graphql.Field {
 					}
 					cates = append(cates, categories)
 				}
-				if listNovelsReq.Isgetchapters {
+				if NovelListReq.Isgetchapters {
 					chapter, err1 := chaptersRepo.FindChaptersList(entity.Chapters{
 						NovelsID: novel[i].ID,
 					})
@@ -112,20 +113,21 @@ func ListNovelsMutation(containerRepo map[string]interface{}) *graphql.Field {
 							"title":       chapter[i].Title,
 							"content_url": chapter[i].ContentUrl,
 						}
+						fmt.Println(chapterco)
 						chapters = append(chapters, chapterco)
 					}
 				}
-				listnovel := map[string]interface{}{
+				nl := map[string]interface{}{
 					"id":         novel[i].ID,
 					"name":       novel[i].Name,
 					"user_id":    novel[i].UsersID,
 					"chapter":    chapters,
 					"categories": cates,
 				}
-				listnovels = append(listnovels, listnovel)
+				novellist = append(novellist, nl)
 			}
 			result = map[string]interface{}{
-				"list": listnovels,
+				"list": novellist,
 			}
 			return
 		},
