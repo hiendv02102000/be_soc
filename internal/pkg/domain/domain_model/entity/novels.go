@@ -6,6 +6,6 @@ type Novels struct {
 	ImageUrl string `gorm:"column:image_url"`
 	View     int    `gorm:"column:view"`
 	UsersID  int    `gorm:"column:users_id"`
-
+	Chapters []Chapters
 	BaseModel
 }
