@@ -5,7 +5,7 @@ import "github.com/graphql-go/graphql"
 func LoginOutput() *graphql.Object {
 	return graphql.NewObject(
 		graphql.ObjectConfig{
-			Name: "CreateUserOutput",
+			Name: "LoginOutput",
 			Fields: graphql.Fields{
 				"token": &graphql.Field{
 					Type: graphql.String,
