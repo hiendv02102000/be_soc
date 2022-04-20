@@ -6,3 +6,7 @@ type NovelsCategories struct {
 	CategoriesID int `gorm:"column:categories_id"`
 	BaseModel
 }
+
+func (*NovelsCategories) TableName() string {
+	return "novels_categories"
+}

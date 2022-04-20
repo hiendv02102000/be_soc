@@ -5,21 +5,18 @@ import "github.com/graphql-go/graphql"
 func CreateUserOutput() *graphql.Object {
 	return graphql.NewObject(
 		graphql.ObjectConfig{
-			Name: "LoginOutput",
+			Name: "CreateUserOutput",
 			Fields: graphql.Fields{
-				"id": &graphql.Field{
-					Type: graphql.Int,
-				},
-				"name": &graphql.Field{
+				"username": &graphql.Field{
 					Type: graphql.String,
 				},
-				"user": &graphql.Field{
+				"first_name": &graphql.Field{
 					Type: graphql.String,
 				},
-				"categories": &graphql.Field{
+				"last_name": &graphql.Field{
 					Type: graphql.String,
 				},
-				"img_url": &graphql.Field{
+				"role": &graphql.Field{
 					Type: graphql.String,
 				},
 				"created_at": &graphql.Field{

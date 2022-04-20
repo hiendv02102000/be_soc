@@ -4,6 +4,8 @@ import (
 
 	// import source file
 
+	"fmt"
+
 	_ "github.com/golang-migrate/migrate/v4/source/file"
 
 	"github.com/jinzhu/gorm"
@@ -51,7 +53,13 @@ func (db *Database) Find(condition interface{}, value interface{}) error {
 	return err
 }
 func (db *Database) Create(value interface{}) error {
+	//	fmt.Println(value)
 	err := db.DB.Create(value).Error
+	return err
+}
+func (db *Database) CreateMany(value interface{}, model interface{}) error {
+	fmt.Println(model)
+	err := db.DB.Model(model).Create(value).Error
 	return err
 }
 func (db *Database) Delete(value interface{}) error {

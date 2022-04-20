@@ -18,6 +18,10 @@ func (u *NovelRepository) FindNovelList(condition entity.Novels) (novel []entity
 	err = u.DB.Find(condition, &novel)
 	return novel, err
 }
+func (u *NovelRepository) CreateNovel(novel entity.Novels) (entity.Novels, error) {
+	err := u.DB.Create(&novel)
+	return novel, err
+}
 func NewNovelRepository(db db.Database) *NovelRepository {
 	return &NovelRepository{
 		DB: db,
