@@ -19,7 +19,8 @@ func GetClientQuery(containerRepo map[string]interface{}) *graphql.Object {
 	return graphql.NewObject(graphql.ObjectConfig{
 		Name: "query",
 		Fields: graphql.Fields{
-			"get_novel_list": query.GetNovelListQuery(containerRepo),
+			"get_novel_list":   query.GetNovelListQuery(containerRepo),
+			"get_user_profile": query.GetUserProfile(containerRepo),
 		},
 	})
 }
