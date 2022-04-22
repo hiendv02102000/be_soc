@@ -13,6 +13,14 @@ func (u *ChaptersRepository) FindChaptersList(condition entity.Chapters) (chapte
 	err = u.DB.Find(condition, &chapters)
 	return
 }
+func (u *ChaptersRepository) FirstChapter(condition entity.Chapters) (entity.Chapters, error) {
+	chapter := entity.Chapters{}
+	err := u.DB.First(condition, &chapter)
+	return chapter, err
+}
+func (u *ChaptersRepository) UpdateChapter(chapter, oldchapter entity.Chapters) error {
+	return u.DB.Update(entity.Chapters{}, &oldchapter, &chapter)
+}
 func NewChaptersRepository(db db.Database) *ChaptersRepository {
 	return &ChaptersRepository{
 		DB: db,

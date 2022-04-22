@@ -13,5 +13,6 @@ func GetContainerRepo(data db.Database) map[string]interface{} {
 		"chapters_repository":         repository.NewChaptersRepository(data),
 		"novelscategories_repository": repository.NewNovelsCategoriesRepository(data),
 		"categories_repository":       repository.NewCategoriesRepository(data),
+		"chapter_repository":          repository.NewChaptersRepository(data),
 	}
 }
