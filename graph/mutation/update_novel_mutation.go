@@ -13,7 +13,7 @@ import (
 	"github.com/graphql-go/graphql"
 )
 
-func UpdateNovelsMutation(containerRepo map[string]interface{}) *graphql.Field {
+func UpdateNovelMutation(containerRepo map[string]interface{}) *graphql.Field {
 	return &graphql.Field{
 		Type:        output.UpdateNovelOutput(),
 		Description: "Update novel",
@@ -58,9 +58,9 @@ func UpdateNovelsMutation(containerRepo map[string]interface{}) *graphql.Field {
 				return
 			}
 			result = map[string]interface{}{
-				"id":       oldnovel.ID,
-				"name":     oldnovel.Name,
-				"imageurl": oldnovel.ImageUrl,
+				"id":        updateNovelReq.ID,
+				"name":      updateNovelReq.Name,
+				"image_url": updateNovelReq.Imageurl,
 			}
 			// timeNow := time.Now()
 

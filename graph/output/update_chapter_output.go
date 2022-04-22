@@ -2,21 +2,18 @@ package output
 
 import "github.com/graphql-go/graphql"
 
-func UpdateNovelOutput() *graphql.Object {
+func UpdateChapterOutput() *graphql.Object {
 	return graphql.NewObject(
 		graphql.ObjectConfig{
-			Name: "UpdateNovelOutput",
+			Name: "UpdateChapterOutput",
 			Fields: graphql.Fields{
 				"id": &graphql.Field{
 					Type: graphql.Int,
 				},
-				"name": &graphql.Field{
+				"title": &graphql.Field{
 					Type: graphql.String,
 				},
-				"image_url": &graphql.Field{
-					Type: graphql.String,
-				},
-				"view": &graphql.Field{
+				"content_url": &graphql.Field{
 					Type: graphql.String,
 				},
 				"user_id": &graphql.Field{
