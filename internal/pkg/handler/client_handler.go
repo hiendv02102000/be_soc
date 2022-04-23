@@ -32,7 +32,6 @@ func (h *HTTPClientHandler) Handle(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, data)
 		return
 	}
-	c.Set("fileIO", "")
 	exce := ""
 	if len(req.Query) > 0 {
 		exce = req.Query
@@ -45,7 +44,6 @@ func (h *HTTPClientHandler) Handle(c *gin.Context) {
 		Schema:        *h.Schema,
 		RequestString: exce,
 	})
-	c.Set("fileIO", nil)
 	code := http.StatusOK
 	if len(data.Errors) > 0 {
 		code = http.StatusBadRequest
