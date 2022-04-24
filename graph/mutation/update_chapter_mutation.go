@@ -7,6 +7,7 @@ import (
 	"be_soc/internal/pkg/domain/domain_model/entity"
 	"be_soc/internal/pkg/domain/service"
 	"be_soc/pkg/share/middleware"
+	"be_soc/pkg/share/utils"
 	"errors"
 
 	"github.com/gin-gonic/gin"
@@ -37,6 +38,7 @@ func UpdateChapterMutation(containerRepo map[string]interface{}) *graphql.Field 
 			if req["title"] != nil {
 				updateChapterReq.Title = req["title"].(string)
 			}
+
 			chapterRepo := containerRepo["chapter_repository"].(service.ChaptersRepositoryInterface)
 			novelRepo := containerRepo["novel_repository"].(service.NovelRepositoryInterface)
 			novel, err := novelRepo.FirstNovel(entity.Novels{
@@ -58,10 +60,28 @@ func UpdateChapterMutation(containerRepo map[string]interface{}) *graphql.Field 
 				Title:      updateChapterReq.Title,
 				ContentUrl: &updateChapterReq.Contenturl,
 			}, chapter)
+			file, _ := ctx.FormFile("file")
+			if file != nil {
+				ioFile, errFile := file.Open()
+				if errFile != nil {
+					err = errFile
+					return
+				}
+				url, errUpload := utils.UploadFile(ioFile, file.Filename)
+				if errUpload != nil {
+					err = errUpload
+					return
+				}
+				chapter.ContentUrl = &url
+			}
+			newchapter, err := chapterRepo.FirstChapter(entity.Chapters{
+				ID: updateChapterReq.ChapterID,
+			})
 			result = map[string]interface{}{
-				"id":          updateChapterReq.ChapterID,
-				"title":       updateChapterReq.Title,
-				"content_url": updateChapterReq.Contenturl,
+				"id":          newchapter.ID,
+				"title":       newchapter.Title,
+				"content_url": newchapter.ContentUrl,
+				"update_at":   newchapter.UpdatedAt,
 			}
 			// timeNow := time.Now()
 
