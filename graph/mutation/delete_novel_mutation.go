@@ -34,27 +34,27 @@ func DeleteNovelMutation(containerRepo map[string]interface{}) *graphql.Field {
 			}
 
 			novelRepo := containerRepo["novel_repository"].(service.NovelRepositoryInterface)
-			delete_novel, err := novelRepo.FirstNovel(entity.Novels{
+			DeleteNovel, err := novelRepo.FirstNovel(entity.Novels{
 				ID: delete_novel_req.ID,
 			})
-			if user.ID != delete_novel.UsersID {
+			if user.ID != DeleteNovel.UsersID {
 				err = errors.New("method not allowed")
 			}
 			if err != nil {
 				return
 			}
-			if delete_novel.ID == 0 {
+			if DeleteNovel.ID == 0 {
 				err = errors.New("method not allowed")
 				return
 			}
 			novelRepo.DeleteNovel(entity.Novels{
-				ID: delete_novel.ID, //dieu kien
+				ID: DeleteNovel.ID, //dieu kien
 			})
 
 			result = map[string]interface{}{
-				"id":        delete_novel.ID,
-				"name":      delete_novel.Name,
-				"image_url": delete_novel.ImageUrl,
+				"id":        DeleteNovel.ID,
+				"name":      DeleteNovel.Name,
+				"image_url": DeleteNovel.ImageUrl,
 			}
 
 			return
