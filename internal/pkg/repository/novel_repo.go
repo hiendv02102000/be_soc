@@ -23,7 +23,7 @@ func (u *NovelRepository) CreateNovel(novel entity.Novels) (entity.Novels, error
 	return novel, err
 }
 func (u *NovelRepository) UpdateNovel(novel, oldNovel entity.Novels) error {
-	return u.DB.Update(entity.Novels{}, &oldNovel, &novel)
+	return u.DB.Update(entity.Novels{}, oldNovel, novel)
 }
 func NewNovelRepository(db db.Database) *NovelRepository {
 	return &NovelRepository{
