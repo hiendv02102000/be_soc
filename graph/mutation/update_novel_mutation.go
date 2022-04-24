@@ -41,13 +41,13 @@ func UpdateNovelMutation(containerRepo map[string]interface{}) *graphql.Field {
 				ID: updateNovelReq.ID,
 			})
 			if user.ID != oldnovel.UsersID {
-				err = errors.New("Method not allowed")
+				err = errors.New("method not allowed")
 			}
 			if err != nil {
 				return
 			}
 			if updateNovelReq.ID == 0 {
-				err = errors.New("Novel is unexist")
+				err = errors.New("novel is unexist")
 				return
 			}
 			novelRepo.UpdateNovel(entity.Novels{

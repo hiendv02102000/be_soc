@@ -3,7 +3,6 @@ package query
 import (
 	"be_soc/graph/input"
 	"be_soc/graph/output"
-	"be_soc/internal/pkg/domain/domain_model/dto"
 	"be_soc/internal/pkg/domain/domain_model/entity"
 	"be_soc/internal/pkg/domain/service"
 	"be_soc/pkg/share/middleware"
@@ -26,11 +25,8 @@ func GetUserProfile(containerRepo map[string]interface{}) *graphql.Field {
 		Resolve: func(p graphql.ResolveParams) (result interface{}, err error) {
 			ctx := p.Context.(*gin.Context)
 			user := middleware.GetUserFromContext(ctx)
-			req := p.Args["user_profile"].(map[string]interface{})
-			get_user_profile := dto.GetUserProfile{
-				ID: req["id"].(int),
-			}
-			if user.ID != get_user_profile.ID {
+
+			if user.ID != user.ID {
 				err = errors.New("Method not allowed")
 			}
 			if err != nil {
@@ -41,7 +37,7 @@ func GetUserProfile(containerRepo map[string]interface{}) *graphql.Field {
 
 			user_profile, err := userRepo.FirstUser(entity.Users{
 
-				ID: get_user_profile.ID,
+				ID: user.ID,
 			})
 			if err != nil {
 				return

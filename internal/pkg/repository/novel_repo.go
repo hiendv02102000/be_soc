@@ -30,3 +30,8 @@ func NewNovelRepository(db db.Database) *NovelRepository {
 		DB: db,
 	}
 }
+
+func (u *NovelRepository) DeleteNovel(novel entity.Novels) error {
+	err := u.DB.Delete(&novel)
+	return err
+}
