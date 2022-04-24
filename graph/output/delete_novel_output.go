@@ -8,9 +8,6 @@ func DeleteNovelOutput() *graphql.Object {
 			Name: "DeleteNovelOutput",
 			Fields: graphql.Fields{
 
-				// "delete_at": &graphql.Field{
-				// 	Type: graphql.DateTime,
-				// },
 				"id": &graphql.Field{
 					Type: graphql.Int,
 				},
