@@ -5,7 +5,6 @@ import (
 	"be_soc/internal/pkg/domain/domain_model/entity"
 	"be_soc/internal/pkg/domain/service"
 	"be_soc/pkg/share/middleware"
-	"errors"
 
 	"github.com/gin-gonic/gin"
 	"github.com/graphql-go/graphql"
@@ -20,9 +19,6 @@ func GetUserProfileQuery(containerRepo map[string]interface{}) *graphql.Field {
 			ctx := p.Context.(*gin.Context)
 			user := middleware.GetUserFromContext(ctx)
 
-			if user.ID != user.ID {
-				err = errors.New("Method not allowed")
-			}
 			if err != nil {
 				return
 			}
