@@ -5,6 +5,6 @@ type Chapters struct {
 	Title      string  `gorm:"column:title;"`
 	ContentUrl *string `gorm:"column:content_url"`
 	NovelsID   int     `gorm:"column:novels_id"`
-
+	Comments   []Comments
 	BaseModel
 }
