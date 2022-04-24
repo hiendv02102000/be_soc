@@ -5,7 +5,7 @@ import "github.com/graphql-go/graphql"
 func CreateNovelOutput() *graphql.Object {
 	return graphql.NewObject(
 		graphql.ObjectConfig{
-			Name: "LoginOutput",
+			Name: "CreateNovelOutput",
 			Fields: graphql.Fields{
 				"id": &graphql.Field{
 					Type: graphql.Int,

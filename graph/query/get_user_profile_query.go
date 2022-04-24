@@ -25,7 +25,7 @@ func GetUserProfileQuery(containerRepo map[string]interface{}) *graphql.Field {
 			novelRepo := containerRepo["novel_repository"].(service.NovelRepositoryInterface)
 			userRepo := containerRepo["user_repository"].(service.UserRepositoryInterface)
 
-			userProfile, err := userRepo.FirstUser(entity.Users{
+			UserProfile, err := userRepo.FirstUser(entity.Users{
 
 				ID: user.ID,
 			})
@@ -41,10 +41,10 @@ func GetUserProfileQuery(containerRepo map[string]interface{}) *graphql.Field {
 			}
 			result = map[string]interface{}{
 
-				"ID":         userProfile.ID,
-				"first_name": userProfile.FirstName,
-				"last_name":  userProfile.LastName,
-				"username":   userProfile.Username,
+				"ID":         UserProfile.ID,
+				"first_name": UserProfile.FirstName,
+				"last_name":  UserProfile.LastName,
+				"username":   UserProfile.Username,
 				"novel":      novel,
 			}
 

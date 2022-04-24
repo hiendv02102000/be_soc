@@ -7,5 +7,4 @@ type NovelRepositoryInterface interface {
 	FirstNovel(condition entity.Novels) (entity.Novels, error)
 	CreateNovel(entity.Novels) (entity.Novels, error)
 	UpdateNovel(novel, oldNovel entity.Novels) error
-	DeleteNovel(novel entity.Novels) error
 }
