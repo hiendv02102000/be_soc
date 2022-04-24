@@ -21,6 +21,10 @@ func (u *ChaptersRepository) FirstChapter(condition entity.Chapters) (entity.Cha
 func (u *ChaptersRepository) UpdateChapter(chapter, oldchapter entity.Chapters) error {
 	return u.DB.Update(entity.Chapters{}, oldchapter, chapter)
 }
+func (u *ChaptersRepository) CreateChapter(chapter entity.Chapters) (entity.Chapters, error) {
+	err := u.DB.Create(&chapter)
+	return chapter, err
+}
 func NewChaptersRepository(db db.Database) *ChaptersRepository {
 	return &ChaptersRepository{
 		DB: db,
