@@ -12,7 +12,7 @@ import (
 	"github.com/graphql-go/graphql"
 )
 
-func GetUserProfile(containerRepo map[string]interface{}) *graphql.Field {
+func GetUserProfileQuery(containerRepo map[string]interface{}) *graphql.Field {
 	return &graphql.Field{
 		Type:        output.GetUserProfile(),
 		Description: "User's Profile",
