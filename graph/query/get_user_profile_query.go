@@ -1,7 +1,6 @@
 package query
 
 import (
-	"be_soc/graph/input"
 	"be_soc/graph/output"
 	"be_soc/internal/pkg/domain/domain_model/entity"
 	"be_soc/internal/pkg/domain/service"
@@ -17,11 +16,6 @@ func GetUserProfileQuery(containerRepo map[string]interface{}) *graphql.Field {
 		Type:        output.GetUserProfile(),
 		Description: "User's Profile",
 
-		Args: graphql.FieldConfigArgument{
-			"user_profile": &graphql.ArgumentConfig{
-				Type: input.GetUserProfile(),
-			},
-		},
 		Resolve: func(p graphql.ResolveParams) (result interface{}, err error) {
 			ctx := p.Context.(*gin.Context)
 			user := middleware.GetUserFromContext(ctx)
@@ -35,7 +29,7 @@ func GetUserProfileQuery(containerRepo map[string]interface{}) *graphql.Field {
 			novelRepo := containerRepo["novel_repository"].(service.NovelRepositoryInterface)
 			userRepo := containerRepo["user_repository"].(service.UserRepositoryInterface)
 
-			user_profile, err := userRepo.FirstUser(entity.Users{
+			UserProfile, err := userRepo.FirstUser(entity.Users{
 
 				ID: user.ID,
 			})
@@ -51,10 +45,10 @@ func GetUserProfileQuery(containerRepo map[string]interface{}) *graphql.Field {
 			}
 			result = map[string]interface{}{
 
-				"ID":         user_profile.ID,
-				"first_name": user_profile.FirstName,
-				"last_name":  user_profile.LastName,
-				"username":   user_profile.Username,
+				"ID":         UserProfile.ID,
+				"first_name": UserProfile.FirstName,
+				"last_name":  UserProfile.LastName,
+				"username":   UserProfile.Username,
 				"novel":      novel,
 			}
 

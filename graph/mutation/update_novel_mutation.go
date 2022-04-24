@@ -47,7 +47,7 @@ func UpdateNovelMutation(containerRepo map[string]interface{}) *graphql.Field {
 				return
 			}
 			if updateNovelReq.ID == 0 {
-				err = errors.New("novel is unexist")
+				err = errors.New("Novel is unexist")
 				return
 			}
 			novelRepo.UpdateNovel(entity.Novels{
