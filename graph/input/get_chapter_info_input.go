@@ -9,9 +9,6 @@ func GetChapterInfoInput() *graphql.InputObject {
 			"id": &graphql.InputObjectFieldConfig{
 				Type: graphql.Int,
 			},
-			"novel_id": &graphql.InputObjectFieldConfig{
-				Type: graphql.Int,
-			},
 		},
 	})
 }

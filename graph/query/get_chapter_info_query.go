@@ -23,8 +23,7 @@ func GetChapterInfoQuery(containerRepo map[string]interface{}) *graphql.Field {
 		Resolve: func(p graphql.ResolveParams) (result interface{}, err error) {
 			req := p.Args["chapter"].(map[string]interface{})
 			getchapterinfo := dto.GetChapterInfoRequest{
-				NovelID: req["novel_id"].(int),
-				ID:      req["id"].(int),
+				ID: req["id"].(int),
 			}
 			if err != nil {
 				return
@@ -33,8 +32,7 @@ func GetChapterInfoQuery(containerRepo map[string]interface{}) *graphql.Field {
 			cmtchapterRepo := containerRepo["comments_chapters_repository"].(service.CommentsChaptersRepositoryInterface)
 			commentRepo := containerRepo["comments_repository"].(service.CommentsRepositoryInterface)
 			chapterinfo, err := gciRepo.FirstChapter(entity.Chapters{
-				ID:       getchapterinfo.ID,
-				NovelsID: getchapterinfo.NovelID,
+				ID: getchapterinfo.ID,
 			})
 			if err != nil {
 				return
