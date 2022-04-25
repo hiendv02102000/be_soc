@@ -22,7 +22,7 @@ func (r *Router) Setup() {
 	if err != nil {
 		fmt.Println(err)
 	}
-	// r.DB.MigrateDBWithGorm()
+	r.DB.MigrateDBWithGorm()
 	validators.SetUpValidator()
 	h := handler.NewHTTPHandler(r.DB)
 	hClient := handler.NewHTTPClientHandler(r.DB)
