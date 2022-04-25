@@ -27,6 +27,7 @@ func GetClientMutation(containerRepo map[string]interface{}) *graphql.Object {
 			"create_chapter":  mutation.CreateChapterMutation(containerRepo),
 			"delete_novel":    mutation.DeleteNovelMutation(containerRepo),
 			"delete_chapter":  mutation.DeleteChapterMutation(containerRepo),
+			"create_comment":  mutation.CreateCommentMutation(containerRepo),
 		},
 	})
 }

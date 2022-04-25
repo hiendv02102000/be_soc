@@ -18,6 +18,10 @@ func (u *CommentsRepository) FirstComment(condition entity.Comments) (entity.Com
 	err := u.DB.First(condition, &comment)
 	return comment, err
 }
+func (u *CommentsRepository) CreateComment(comment entity.Comments) (entity.Comments, error) {
+	err := u.DB.Create(&comment)
+	return comment, err
+}
 func NewCommentsRepository(db db.Database) *CommentsRepository {
 	return &CommentsRepository{
 		DB: db,
