@@ -30,3 +30,8 @@ func NewChaptersRepository(db db.Database) *ChaptersRepository {
 		DB: db,
 	}
 }
+
+func (u *ChaptersRepository) DeleteChapter(chapter entity.Chapters) error {
+	err := u.DB.Delete(&chapter)
+	return err
+}

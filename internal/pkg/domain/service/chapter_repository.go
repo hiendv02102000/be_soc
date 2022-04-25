@@ -7,4 +7,5 @@ type ChaptersRepositoryInterface interface {
 	FirstChapter(condition entity.Chapters) (entity.Chapters, error)
 	UpdateChapter(chapter, oldchapter entity.Chapters) error
 	CreateChapter(chapter entity.Chapters) (entity.Chapters, error)
+	DeleteChapter(chapter entity.Chapters) error
 }
