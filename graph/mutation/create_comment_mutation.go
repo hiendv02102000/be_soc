@@ -25,7 +25,7 @@ func CreateCommentMutation(containerRepo map[string]interface{}) *graphql.Field 
 		},
 		Resolve: func(p graphql.ResolveParams) (result interface{}, err error) {
 			ctx := p.Context.(*gin.Context)
-			user := middleware.GetUserFromContext(ctx)
+
 			req := p.Args["comment"].(map[string]interface{})
 			createCommentReq := dto.CreateCommentRequest{
 				ChapterID:      req["chapter_id"].(int),
@@ -35,6 +35,7 @@ func CreateCommentMutation(containerRepo map[string]interface{}) *graphql.Field 
 			if err != nil {
 				return
 			}
+			user := middleware.GetUserFromContext(ctx)
 			commentRepo := containerRepo["comments_repository"].(service.CommentsRepositoryInterface)
 			comment, err := commentRepo.CreateComment(entity.Comments{
 				ChapterID:       createCommentReq.ChapterID,
