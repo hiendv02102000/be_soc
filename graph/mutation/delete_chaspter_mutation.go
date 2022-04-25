@@ -29,14 +29,14 @@ func DeleteChapterMutation(containerRepo map[string]interface{}) *graphql.Field 
 			user := middleware.GetUserFromContext(ctx)
 
 			req := p.Args["chapter"].(map[string]interface{})
-			delete_chapter_req := dto.DeleteChapterRequest{
+			deleteChapterRequest := dto.DeleteChapterRequest{
 				ID: req["id"].(int),
 			}
 
 			chapterRepo := containerRepo["chapter_repository"].(service.ChaptersRepositoryInterface)
 			novelRepo := containerRepo["novel_repository"].(service.NovelRepositoryInterface)
 			deleteChapter, err := chapterRepo.FirstChapter(entity.Chapters{
-				ID: delete_chapter_req.ID,
+				ID: deleteChapterRequest.ID,
 			})
 
 			novel, err := novelRepo.FirstNovel(entity.Novels{
