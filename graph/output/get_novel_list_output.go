@@ -21,6 +21,9 @@ func NovelListOutput() *graphql.Object {
 								"user_id": &graphql.Field{
 									Type: graphql.Int,
 								},
+								"url_img": &graphql.Field{
+									Type: graphql.String,
+								},
 								"chapter": &graphql.Field{
 									Type: &graphql.List{OfType: graphql.NewObject(
 										graphql.ObjectConfig{
