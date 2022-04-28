@@ -6,7 +6,6 @@ import (
 	"be_soc/internal/pkg/domain/domain_model/dto"
 	"be_soc/internal/pkg/domain/domain_model/entity"
 	"be_soc/internal/pkg/domain/service"
-	"fmt"
 
 	"github.com/graphql-go/graphql"
 )
@@ -39,7 +38,6 @@ func GetNovelListQuery(containerRepo map[string]interface{}) *graphql.Field {
 			if req["is_get_chapters"] != nil {
 				NovelListReq.Isgetchapters = req["is_get_chapters"].(bool)
 			}
-
 			novelRepo := containerRepo["novel_repository"].(service.NovelRepositoryInterface)
 			chaptersRepo := containerRepo["chapters_repository"].(service.ChaptersRepositoryInterface)
 			categoriesRepo := containerRepo["categories_repository"].(service.CategoriesRepositoryInterface)
@@ -113,13 +111,13 @@ func GetNovelListQuery(containerRepo map[string]interface{}) *graphql.Field {
 							"title":       chapter[i].Title,
 							"content_url": chapter[i].ContentUrl,
 						}
-						fmt.Println(chapterco)
 						chapters = append(chapters, chapterco)
 					}
 				}
 				nl := map[string]interface{}{
 					"id":         novel[i].ID,
 					"name":       novel[i].Name,
+					"url_img":    novel[i].ImageUrl,
 					"user_id":    novel[i].UsersID,
 					"chapter":    chapters,
 					"categories": cates,
