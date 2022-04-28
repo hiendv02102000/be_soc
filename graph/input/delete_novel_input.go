@@ -2,9 +2,9 @@ package input
 
 import "github.com/graphql-go/graphql"
 
-func GetUserProfile() *graphql.InputObject {
+func DeleteNovelInput() *graphql.InputObject {
 	return graphql.NewInputObject(graphql.InputObjectConfig{
-		Name: "GetUserProfile",
+		Name: "DeleteNovelInput",
 		Fields: graphql.InputObjectConfigFieldMap{
 			"id": &graphql.InputObjectFieldConfig{
 				Type: graphql.Int,

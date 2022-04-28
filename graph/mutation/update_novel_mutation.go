@@ -7,6 +7,7 @@ import (
 	"be_soc/internal/pkg/domain/domain_model/entity"
 	"be_soc/internal/pkg/domain/service"
 	"be_soc/pkg/share/middleware"
+	"be_soc/pkg/share/utils"
 	"errors"
 
 	"github.com/gin-gonic/gin"
@@ -47,25 +48,39 @@ func UpdateNovelMutation(containerRepo map[string]interface{}) *graphql.Field {
 				return
 			}
 			if updateNovelReq.ID == 0 {
-				err = errors.New("Novel is unexist")
+				err = errors.New("Novel is no exist")
 				return
 			}
 			novelRepo.UpdateNovel(entity.Novels{
 				Name:     updateNovelReq.Name,
 				ImageUrl: &updateNovelReq.Imageurl,
 			}, oldnovel)
+			file, _ := ctx.FormFile("file")
+			if file != nil {
+				ioFile, errFile := file.Open()
+				if errFile != nil {
+					err = errFile
+					return
+				}
+				url, errUpload := utils.UploadFile(ioFile, file.Filename)
+				if errUpload != nil {
+					err = errUpload
+					return
+				}
+				oldnovel.ImageUrl = &url
+			}
+			novel, err := novelRepo.FirstNovel(entity.Novels{
+				ID: updateNovelReq.ID,
+			})
 			if err != nil {
 				return
 			}
 			result = map[string]interface{}{
-				"id":        updateNovelReq.ID,
-				"name":      updateNovelReq.Name,
-				"image_url": updateNovelReq.Imageurl,
+				"id":        novel.ID,
+				"name":      novel.Name,
+				"image_url": novel.ImageUrl,
+				"update_at": novel.UpdatedAt,
 			}
-			// timeNow := time.Now()
-
-			// newUser := entity.Users{Username: loginReq.Username,
-			// 	Password: loginReq.Password}
 			return
 		},
 	}
