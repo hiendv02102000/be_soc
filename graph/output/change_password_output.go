@@ -10,6 +10,12 @@ func ChangePasswordOutput() *graphql.Object {
 				"password": &graphql.Field{
 					Type: graphql.String,
 				},
+				"token": &graphql.Field{
+					Type: graphql.String,
+				},
+				"token_expired_at": &graphql.Field{
+					Type: graphql.DateTime,
+				},
 			},
 		},
 	)
