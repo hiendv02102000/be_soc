@@ -35,7 +35,7 @@ func NovelListOutput() *graphql.Object {
 												"title": &graphql.Field{
 													Type: graphql.String,
 												},
-												"content": &graphql.Field{
+												"content_url": &graphql.Field{
 													Type: graphql.String,
 												},
 											},
