@@ -9,6 +9,9 @@ func ChangePasswordInput() *graphql.InputObject {
 			"password": &graphql.InputObjectFieldConfig{
 				Type: graphql.String,
 			},
+			"old_password": &graphql.InputObjectFieldConfig{
+				Type: graphql.String,
+			},
 		},
 	})
 }
