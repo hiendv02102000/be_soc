@@ -29,7 +29,6 @@ func GetChapterInfoQuery(containerRepo map[string]interface{}) *graphql.Field {
 				return
 			}
 			gciRepo := containerRepo["chapter_repository"].(service.ChaptersRepositoryInterface)
-			cmtchapterRepo := containerRepo["comments_chapters_repository"].(service.CommentsChaptersRepositoryInterface)
 			commentRepo := containerRepo["comments_repository"].(service.CommentsRepositoryInterface)
 			chapterinfo, err := gciRepo.FirstChapter(entity.Chapters{
 				ID: getchapterinfo.ID,
@@ -37,13 +36,13 @@ func GetChapterInfoQuery(containerRepo map[string]interface{}) *graphql.Field {
 			if err != nil {
 				return
 			}
-			cmtchapter, err := cmtchapterRepo.FindCommentsChapters(entity.CommentsChapters{
-				ChaptersID: chapterinfo.ID,
+			cmtchapter, err := commentRepo.FindComments(entity.Comments{
+				ChapterID: chapterinfo.ID,
 			})
 			comments := make([]map[string]interface{}, 0)
 			for i := 0; i < len(cmtchapter); i++ {
 				c, err1 := commentRepo.FirstComment(entity.Comments{
-					ID: cmtchapter[i].CommentsID,
+					ID: cmtchapter[i].ID,
 				})
 				if err1 != nil {
 					return
