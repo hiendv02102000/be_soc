@@ -21,5 +21,6 @@ type Users struct {
 	Role           roleAllowed `gorm:"column:role" sql:"type:role_name"`
 	Token          *string     `gorm:"column:token"`
 	TokenExpriedAt *time.Time  `gorm:"column:token_expired_at"`
+	Novels         []Novels
 	BaseModel
 }
