@@ -7,6 +7,7 @@ func CreateChapterOutput() *graphql.Object {
 		graphql.ObjectConfig{
 			Name: "CreateChapterOutput",
 			Fields: graphql.Fields{
+
 				"id": &graphql.Field{
 					Type: graphql.Int,
 				},

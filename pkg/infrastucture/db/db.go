@@ -4,6 +4,7 @@ import (
 
 	// import source file
 
+	"be_soc/internal/pkg/domain/domain_model/entity"
 	"fmt"
 
 	_ "github.com/golang-migrate/migrate/v4/source/file"
@@ -27,7 +28,7 @@ func NewDB() (Database, error) {
 }
 func (db *Database) MigrateDBWithGorm() {
 	// db.DB.AutoMigrate(entity.Users{})
-	// db.DB.AutoMigrate(entity.Comments{})
+	db.DB.AutoMigrate(entity.Comments{})
 	// db.DB.AutoMigrate(entity.Categories{})
 	// db.DB.AutoMigrate(entity.Novels{})
 	// db.DB.AutoMigrate(entity.Chapters{})
@@ -68,4 +69,7 @@ func (db *Database) Delete(value interface{}) error {
 func (db *Database) Update(model interface{}, oldVal interface{}, newVal interface{}) error {
 	//fmt.Println(err)
 	return db.DB.Model(model).Where(oldVal).Updates(newVal).Error
+}
+func (db *Database) ExcQuery(query string) error {
+	return db.DB.Exec(query).Error
 }

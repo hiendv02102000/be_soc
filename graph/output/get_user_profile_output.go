@@ -30,7 +30,7 @@ func GetUserProfile() *graphql.Object {
 								"name": &graphql.Field{
 									Type: graphql.String,
 								},
-								"image_url": &graphql.Field{
+								"img_url": &graphql.Field{
 									Type: graphql.String,
 								},
 								"view": &graphql.Field{

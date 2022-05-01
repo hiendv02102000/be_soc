@@ -22,3 +22,7 @@ func (m *BaseModel) BeforeUpdate(db *gorm.DB) error {
 	m.UpdatedAt = time.Now().Local()
 	return nil
 }
+func (m *BaseModel) BeforeDelete(db *gorm.DB) error {
+	m.UpdatedAt = time.Now().Local()
+	return nil
+}
