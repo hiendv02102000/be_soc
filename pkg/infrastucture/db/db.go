@@ -70,3 +70,6 @@ func (db *Database) Update(model interface{}, oldVal interface{}, newVal interfa
 	//fmt.Println(err)
 	return db.DB.Model(model).Where(oldVal).Updates(newVal).Error
 }
+func (db *Database) ExcQuery(query string) error {
+	return db.DB.Exec(query).Error
+}
