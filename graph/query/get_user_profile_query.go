@@ -63,7 +63,7 @@ func GetUserProfileQuery(containerRepo map[string]interface{}) *graphql.Field {
 			}
 			result = map[string]interface{}{
 
-				"ID":         UserProfile.ID,
+				"ID":         user.ID,
 				"first_name": UserProfile.FirstName,
 				"last_name":  UserProfile.LastName,
 				"username":   UserProfile.Username,
