@@ -45,10 +45,10 @@ func GetUserProfileQuery(containerRepo map[string]interface{}) *graphql.Field {
 
 				fmt.Println(n)
 				novel := map[string]interface{}{
-					"id":      n.ID,
-					"name":    n.Name,
-					"img_url": n.ImageUrl,
-					"view":    n.View,
+					"id":        n.ID,
+					"name":      n.Name,
+					"image_url": n.ImageUrl,
+					"view":      n.View,
 				}
 				novels = append(novels, novel)
 			}
@@ -58,7 +58,7 @@ func GetUserProfileQuery(containerRepo map[string]interface{}) *graphql.Field {
 			}
 			result = map[string]interface{}{
 
-				"id":         UserProfile.ID,
+				"ID":         UserProfile.ID,
 				"first_name": UserProfile.FirstName,
 				"last_name":  UserProfile.LastName,
 				"username":   UserProfile.Username,
