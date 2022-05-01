@@ -62,7 +62,7 @@ func NovelListOutput() *graphql.Object {
 												"id": &graphql.Field{
 													Type: graphql.Int,
 												},
-												"user_name": &graphql.Field{
+												"username": &graphql.Field{
 													Type: graphql.String,
 												},
 												"first_name": &graphql.Field{

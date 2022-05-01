@@ -126,7 +126,7 @@ func GetNovelListQuery(containerRepo map[string]interface{}) *graphql.Field {
 					"id":         user.ID,
 					"first_name": user.FirstName,
 					"last_name":  user.LastName,
-					"user_name":  user.Username,
+					"username":   user.Username,
 				}
 				users = append(users, upro)
 				nl := map[string]interface{}{
