@@ -132,7 +132,7 @@ func GetNovelListQuery(containerRepo map[string]interface{}) *graphql.Field {
 				nl := map[string]interface{}{
 					"id":         novel[i].ID,
 					"name":       novel[i].Name,
-					"url_img":    novel[i].ImageUrl,
+					"img_url":    novel[i].ImageUrl,
 					"user":       users,
 					"chapter":    chapters,
 					"categories": cates,
