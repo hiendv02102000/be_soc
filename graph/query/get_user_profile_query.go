@@ -41,13 +41,8 @@ func GetUserProfileQuery(containerRepo map[string]interface{}) *graphql.Field {
 			})
 			fmt.Println(userNovel)
 			novels := make([]map[string]interface{}, 0)
-			for i := 0; i < len(userNovel); i++ {
-				n, err1 := novelRepo.FirstNovel(entity.Novels{
-					UsersID: userNovel[i].UsersID,
-				})
-				if err1 != nil {
-					return
-				}
+			for _, n := range userNovel {
+
 				fmt.Println(n)
 				novel := map[string]interface{}{
 					"id":      n.ID,
