@@ -54,6 +54,27 @@ func NovelListOutput() *graphql.Object {
 										},
 									)},
 								},
+								"user": &graphql.Field{
+									Type: &graphql.List{OfType: graphql.NewObject(
+										graphql.ObjectConfig{
+											Name: "ChaptersList",
+											Fields: graphql.Fields{
+												"id": &graphql.Field{
+													Type: graphql.Int,
+												},
+												"user_name": &graphql.Field{
+													Type: graphql.String,
+												},
+												"first_name": &graphql.Field{
+													Type: graphql.String,
+												},
+												"last_name": &graphql.Field{
+													Type: graphql.String,
+												},
+											},
+										},
+									)},
+								},
 							},
 						},
 					)},
