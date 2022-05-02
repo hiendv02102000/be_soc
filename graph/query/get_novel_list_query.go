@@ -38,6 +38,7 @@ func GetNovelListQuery(containerRepo map[string]interface{}) *graphql.Field {
 			if req["is_get_chapters"] != nil {
 				NovelListReq.Isgetchapters = req["is_get_chapters"].(bool)
 			}
+			userRepo := containerRepo["user_repository"].(service.UserRepositoryInterface)
 			novelRepo := containerRepo["novel_repository"].(service.NovelRepositoryInterface)
 			chaptersRepo := containerRepo["chapters_repository"].(service.ChaptersRepositoryInterface)
 			categoriesRepo := containerRepo["categories_repository"].(service.CategoriesRepositoryInterface)
@@ -77,6 +78,7 @@ func GetNovelListQuery(containerRepo map[string]interface{}) *graphql.Field {
 			for i := 0; i < len(novel); i++ {
 				cates := make([]map[string]interface{}, 0)
 				chapters := make([]map[string]interface{}, 0)
+				users := make([]map[string]interface{}, 0)
 				nocate, err2 := novelscateRepo.FindNovelsCategoriesList(entity.NovelsCategories{
 					NovelsID: novel[i].ID,
 				})
@@ -114,11 +116,24 @@ func GetNovelListQuery(containerRepo map[string]interface{}) *graphql.Field {
 						chapters = append(chapters, chapterco)
 					}
 				}
+				user, err3 := userRepo.FirstUser(entity.Users{
+					ID: novel[i].UsersID,
+				})
+				if err3 != nil {
+					return
+				}
+				upro := map[string]interface{}{
+					"id":         user.ID,
+					"first_name": user.FirstName,
+					"last_name":  user.LastName,
+					"username":   user.Username,
+				}
+				users = append(users, upro)
 				nl := map[string]interface{}{
 					"id":         novel[i].ID,
 					"name":       novel[i].Name,
 					"img_url":    novel[i].ImageUrl,
-					"user_id":    novel[i].UsersID,
+					"user":       users,
 					"chapter":    chapters,
 					"categories": cates,
 				}
