@@ -52,7 +52,7 @@ func NovelListOutput() *graphql.Object {
 									)},
 								},
 								"user": &graphql.Field{
-									Type: &graphql.List{OfType: graphql.NewObject(
+									Type: graphql.NewObject(
 										graphql.ObjectConfig{
 											Name: "ChaptersList",
 											Fields: graphql.Fields{
@@ -70,7 +70,7 @@ func NovelListOutput() *graphql.Object {
 												},
 											},
 										},
-									)},
+									),
 								},
 							},
 						},
