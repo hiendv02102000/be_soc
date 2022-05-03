@@ -12,9 +12,6 @@ func UpdateNovelInput() *graphql.InputObject {
 			"id": &graphql.InputObjectFieldConfig{
 				Type: graphql.Int,
 			},
-			"image_url": &graphql.InputObjectFieldConfig{
-				Type: graphql.String,
-			},
 		},
 	})
 }
