@@ -31,9 +31,6 @@ func UpdateNovelMutation(containerRepo map[string]interface{}) *graphql.Field {
 			updateNovelReq := dto.UpdateNovelRequest{
 				ID: req["id"].(int),
 			}
-			if req["imageurl"] != nil {
-				updateNovelReq.Imageurl = req["imageurl"].(string)
-			}
 			if req["name"] != nil {
 				updateNovelReq.Name = req["name"].(string)
 			}
@@ -51,10 +48,6 @@ func UpdateNovelMutation(containerRepo map[string]interface{}) *graphql.Field {
 				err = errors.New("Novel is no exist")
 				return
 			}
-			novelRepo.UpdateNovel(entity.Novels{
-				Name:     updateNovelReq.Name,
-				ImageUrl: &updateNovelReq.Imageurl,
-			}, oldnovel)
 			file, _ := ctx.FormFile("file")
 			if file != nil {
 				ioFile, errFile := file.Open()
@@ -67,11 +60,17 @@ func UpdateNovelMutation(containerRepo map[string]interface{}) *graphql.Field {
 					err = errUpload
 					return
 				}
-				oldnovel.ImageUrl = &url
+				updateNovelReq.Imageurl = &url
 			}
+			novelRepo.UpdateNovel(entity.Novels{
+				Name:     updateNovelReq.Name,
+				ImageUrl: updateNovelReq.Imageurl,
+			}, oldnovel)
+
 			novel, err := novelRepo.FirstNovel(entity.Novels{
 				ID: updateNovelReq.ID,
 			})
+
 			if err != nil {
 				return
 			}

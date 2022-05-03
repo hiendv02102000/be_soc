@@ -32,9 +32,6 @@ func UpdateChapterMutation(containerRepo map[string]interface{}) *graphql.Field 
 				NovelID:   req["novel_id"].(int),
 				ChapterID: req["chapter_id"].(int),
 			}
-			if req["content_url"] != nil {
-				updateChapterReq.Contenturl = req["content_url"].(string)
-			}
 			if req["title"] != nil {
 				updateChapterReq.Title = req["title"].(string)
 			}
@@ -56,10 +53,6 @@ func UpdateChapterMutation(containerRepo map[string]interface{}) *graphql.Field 
 			if chapter.NovelsID != updateChapterReq.NovelID {
 				err = errors.New("Method not allowed")
 			}
-			chapterRepo.UpdateChapter(entity.Chapters{
-				Title:      updateChapterReq.Title,
-				ContentUrl: &updateChapterReq.Contenturl,
-			}, chapter)
 			file, _ := ctx.FormFile("file")
 			if file != nil {
 				ioFile, errFile := file.Open()
@@ -72,8 +65,12 @@ func UpdateChapterMutation(containerRepo map[string]interface{}) *graphql.Field 
 					err = errUpload
 					return
 				}
-				chapter.ContentUrl = &url
+				updateChapterReq.Contenturl = &url
 			}
+			chapterRepo.UpdateChapter(entity.Chapters{
+				Title:      updateChapterReq.Title,
+				ContentUrl: updateChapterReq.Contenturl,
+			}, chapter)
 			newchapter, err := chapterRepo.FirstChapter(entity.Chapters{
 				ID: updateChapterReq.ChapterID,
 			})
