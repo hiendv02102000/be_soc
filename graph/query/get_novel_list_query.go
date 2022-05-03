@@ -78,7 +78,6 @@ func GetNovelListQuery(containerRepo map[string]interface{}) *graphql.Field {
 			for i := 0; i < len(novel); i++ {
 				cates := make([]map[string]interface{}, 0)
 				chapters := make([]map[string]interface{}, 0)
-				users := make([]map[string]interface{}, 0)
 				nocate, err2 := novelscateRepo.FindNovelsCategoriesList(entity.NovelsCategories{
 					NovelsID: novel[i].ID,
 				})
@@ -128,12 +127,12 @@ func GetNovelListQuery(containerRepo map[string]interface{}) *graphql.Field {
 					"last_name":  user.LastName,
 					"username":   user.Username,
 				}
-				users = append(users, upro)
+
 				nl := map[string]interface{}{
 					"id":         novel[i].ID,
 					"name":       novel[i].Name,
 					"img_url":    novel[i].ImageUrl,
-					"user":       users,
+					"user":       upro,
 					"chapter":    chapters,
 					"categories": cates,
 				}
