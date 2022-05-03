@@ -6,6 +6,7 @@ import (
 	"be_soc/internal/pkg/domain/domain_model/dto"
 	"be_soc/internal/pkg/domain/domain_model/entity"
 	"be_soc/internal/pkg/domain/service"
+	"fmt"
 
 	"github.com/graphql-go/graphql"
 )
@@ -28,6 +29,7 @@ func GetChapterInfoQuery(containerRepo map[string]interface{}) *graphql.Field {
 			if err != nil {
 				return
 			}
+			novelRepo := containerRepo["novel_repository"].(service.NovelRepositoryInterface)
 			gciRepo := containerRepo["chapter_repository"].(service.ChaptersRepositoryInterface)
 			commentRepo := containerRepo["comments_repository"].(service.CommentsRepositoryInterface)
 			chapterinfo, err := gciRepo.FirstChapter(entity.Chapters{
@@ -61,7 +63,9 @@ func GetChapterInfoQuery(containerRepo map[string]interface{}) *graphql.Field {
 				"content_url": chapterinfo.ContentUrl,
 				"comments":    comments,
 			}
-
+			novelRepo.UpdateView(
+				"update novels set view = view +1 where id =" + fmt.Sprint(chapterinfo.NovelsID) + ";",
+			)
 			return
 		},
 	}
