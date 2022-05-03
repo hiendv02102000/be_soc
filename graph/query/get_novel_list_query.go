@@ -111,6 +111,7 @@ func GetNovelListQuery(containerRepo map[string]interface{}) *graphql.Field {
 							"id":          chapter[i].ID,
 							"title":       chapter[i].Title,
 							"content_url": chapter[i].ContentUrl,
+							"created_at":  chapter[i].CreatedAt,
 						}
 						chapters = append(chapters, chapterco)
 					}
