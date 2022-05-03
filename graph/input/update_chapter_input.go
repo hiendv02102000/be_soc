@@ -15,9 +15,6 @@ func UpdateChapterInput() *graphql.InputObject {
 			"novel_id": &graphql.InputObjectFieldConfig{
 				Type: graphql.Int,
 			},
-			"content_url": &graphql.InputObjectFieldConfig{
-				Type: graphql.String,
-			},
 		},
 	})
 }
