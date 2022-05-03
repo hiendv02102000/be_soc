@@ -25,12 +25,15 @@ func (u *NovelRepository) CreateNovel(novel entity.Novels) (entity.Novels, error
 func (u *NovelRepository) UpdateNovel(novel, oldNovel entity.Novels) error {
 	return u.DB.Update(entity.Novels{}, oldNovel, novel)
 }
+func (u *NovelRepository) DeleteNovel(novel entity.Novels) error {
+	err := u.DB.Delete(&novel)
+	return err
+}
+func (u *NovelRepository) UpdateView(query string) error {
+	return u.DB.ExcQuery(query)
+}
 func NewNovelRepository(db db.Database) *NovelRepository {
 	return &NovelRepository{
 		DB: db,
 	}
-}
-func (u *NovelRepository) DeleteNovel(novel entity.Novels) error {
-	err := u.DB.Delete(&novel)
-	return err
 }
