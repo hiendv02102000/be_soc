@@ -29,6 +29,7 @@ func GetChapterInfoQuery(containerRepo map[string]interface{}) *graphql.Field {
 			if err != nil {
 				return
 			}
+			userRepo := containerRepo["user_repository"].(service.UserRepositoryInterface)
 			novelRepo := containerRepo["novel_repository"].(service.NovelRepositoryInterface)
 			gciRepo := containerRepo["chapter_repository"].(service.ChaptersRepositoryInterface)
 			commentRepo := containerRepo["comments_repository"].(service.CommentsRepositoryInterface)
@@ -49,10 +50,16 @@ func GetChapterInfoQuery(containerRepo map[string]interface{}) *graphql.Field {
 				if err1 != nil {
 					return
 				}
+				usercmt, err2 := userRepo.FirstUser(entity.Users{
+					ID: c.UsersId,
+				})
+				if err2 != nil {
+					return
+				}
 				comment := map[string]interface{}{
 					"id":              c.ID,
-					"user_id":         c.UsersId,
 					"comment_content": c.CommentsContent,
+					"username":        usercmt.Username,
 				}
 				comments = append(comments, comment)
 			}
