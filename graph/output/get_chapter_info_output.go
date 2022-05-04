@@ -27,8 +27,8 @@ func GetChapterInfoOutput() *graphql.Object {
 								"id": &graphql.Field{
 									Type: graphql.Int,
 								},
-								"user_id": &graphql.Field{
-									Type: graphql.Int,
+								"username": &graphql.Field{
+									Type: graphql.String,
 								},
 								"comment_content": &graphql.Field{
 									Type: graphql.String,
