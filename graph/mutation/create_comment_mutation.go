@@ -46,10 +46,10 @@ func CreateCommentMutation(containerRepo map[string]interface{}) *graphql.Field 
 				return
 			}
 			result = map[string]interface{}{
-				"id":          comment.ID,
-				"cmt_content": comment.CommentsContent,
-				"chapter_id":  comment.ChapterID,
-				"user_id":     comment.UsersId,
+				"id":              comment.ID,
+				"comment_content": comment.CommentsContent,
+				"chapter_id":      comment.ChapterID,
+				"user_id":         comment.UsersId,
 			}
 			return
 		},

@@ -10,7 +10,7 @@ func CreateCommentOutput() *graphql.Object {
 				"id": &graphql.Field{
 					Type: graphql.String,
 				},
-				"cmt_content": &graphql.Field{
+				"comment_content": &graphql.Field{
 					Type: graphql.String,
 				},
 				"user_id": &graphql.Field{
