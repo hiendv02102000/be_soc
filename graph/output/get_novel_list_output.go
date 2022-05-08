@@ -15,6 +15,9 @@ func NovelListOutput() *graphql.Object {
 								"id": &graphql.Field{
 									Type: graphql.Int,
 								},
+								"view": &graphql.Field{
+									Type: graphql.Int,
+								},
 								"name": &graphql.Field{
 									Type: graphql.String,
 								},

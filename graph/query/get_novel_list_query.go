@@ -136,6 +136,7 @@ func GetNovelListQuery(containerRepo map[string]interface{}) *graphql.Field {
 					"user":       upro,
 					"chapter":    chapters,
 					"categories": cates,
+					"view":       novel[i].View,
 				}
 				novellist = append(novellist, nl)
 			}
