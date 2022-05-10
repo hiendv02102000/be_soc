@@ -4,7 +4,6 @@ import (
 
 	// import source file
 
-	"be_soc/internal/pkg/domain/domain_model/entity"
 	"fmt"
 
 	_ "github.com/golang-migrate/migrate/v4/source/file"
@@ -28,7 +27,7 @@ func NewDB() (Database, error) {
 }
 func (db *Database) MigrateDBWithGorm() {
 	// db.DB.AutoMigrate(entity.Users{})
-	db.DB.AutoMigrate(entity.Comments{})
+	// db.DB.AutoMigrate(entity.Comments{})
 	// db.DB.AutoMigrate(entity.Categories{})
 	// db.DB.AutoMigrate(entity.Novels{})
 	// db.DB.AutoMigrate(entity.Chapters{})
