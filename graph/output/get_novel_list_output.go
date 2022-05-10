@@ -43,7 +43,7 @@ func NovelListOutput() *graphql.Object {
 												},
 											},
 										},
-									)},
+									)}, //
 								},
 								"categories": &graphql.Field{
 									Type: &graphql.List{OfType: graphql.NewObject(
