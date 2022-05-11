@@ -18,7 +18,7 @@ type Users struct {
 	LastName       string      `gorm:"column:last_name"`
 	Username       string      `gorm:"column:username;not null"`
 	Password       string      `gorm:"column:password;not null"`
-	Role           roleAllowed `gorm:"column:role" sql:"type:role_name"`
+	Role           roleAllowed `gorm:"column:role"`
 	Token          *string     `gorm:"column:token"`
 	TokenExpriedAt *time.Time  `gorm:"column:token_expired_at"`
 	Novels         []Novels

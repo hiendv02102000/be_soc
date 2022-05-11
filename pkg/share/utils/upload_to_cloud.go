@@ -12,7 +12,7 @@ import (
 var PUBLIC_FOLDER = "docs/sdk/go/"
 
 func UploadImageToCloud(file io.Reader, id_file string, width int, height int) (url string, err error) {
-	cld, err := cloudinary.NewFromParams("hfbryanqg", "813372748842467", "IReNAP12GJOEbPay753ynjrQnS4")
+	cld, err := cloudinary.NewFromParams("dtctadira", "658231379476276", "c8yMID5XRYNirCK5jjCCzuj0HE0")
 	if err != nil {
 		return
 	}
