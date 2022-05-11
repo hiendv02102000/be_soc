@@ -4,7 +4,6 @@ import (
 
 	// import source file
 
-	"be_soc/internal/pkg/domain/domain_model/entity"
 	"fmt"
 
 	_ "github.com/golang-migrate/migrate/v4/source/file"
@@ -19,8 +18,8 @@ type Database struct {
 }
 
 func NewDB() (Database, error) {
-	//dsn := "bd72d9de6c3c1e:9c1f2305@tcp(us-cdbr-east-05.cleardb.net)/heroku_b6698d216dd2cb8?charset=utf8mb4&parseTime=True&loc=Local"
-	dsn := "root:123456@tcp(localhost:3307)/soc?charset=utf8mb4&parseTime=True&loc=Local"
+	dsn := "bac4178dc89368:292965a5@tcp(us-cdbr-east-05.cleardb.net)/heroku_560fb6556eff9f8?charset=utf8mb4&parseTime=True&loc=Local"
+	//dsn := "root:123456@tcp(localhost:3307)/soc?charset=utf8mb4&parseTime=True&loc=Local"
 
 	db, err := gorm.Open("mysql", dsn)
 	return Database{
@@ -28,13 +27,13 @@ func NewDB() (Database, error) {
 	}, err
 }
 func (db *Database) MigrateDBWithGorm() {
-	db.DB.AutoMigrate(entity.Users{})
-	db.DB.AutoMigrate(entity.Comments{})
-	db.DB.AutoMigrate(entity.Categories{})
-	db.DB.AutoMigrate(entity.Novels{})
-	db.DB.AutoMigrate(entity.Chapters{})
-	db.DB.AutoMigrate(entity.UsersFollow{})
-	db.DB.AutoMigrate(entity.NovelsCategories{})
+	// db.DB.AutoMigrate(entity.Users{})
+	// db.DB.AutoMigrate(entity.Comments{})
+	// db.DB.AutoMigrate(entity.Categories{})
+	// db.DB.AutoMigrate(entity.Novels{})
+	// db.DB.AutoMigrate(entity.Chapters{})
+	// db.DB.AutoMigrate(entity.UsersFollow{})
+	// db.DB.AutoMigrate(entity.NovelsCategories{})
 
 }
 func (db *Database) First(condition interface{}, value interface{}) error {
