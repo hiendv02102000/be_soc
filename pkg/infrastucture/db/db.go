@@ -18,8 +18,8 @@ type Database struct {
 }
 
 func NewDB() (Database, error) {
-	dsn := "bac4178dc89368:292965a5@tcp(us-cdbr-east-05.cleardb.net)/heroku_560fb6556eff9f8?charset=utf8mb4&parseTime=True&loc=Local"
-	//dsn := "root:123456@tcp(localhost:3307)/soc?charset=utf8mb4&parseTime=True&loc=Local"
+	//dsn := "bac4178dc89368:292965a5@tcp(us-cdbr-east-05.cleardb.net)/heroku_560fb6556eff9f8?charset=utf8mb4&parseTime=True&loc=Local"
+	dsn := "root:123456@tcp(localhost:3307)/soc?charset=utf8mb4&parseTime=True&loc=Local"
 
 	db, err := gorm.Open("mysql", dsn)
 	return Database{
@@ -47,6 +47,13 @@ func (db *Database) First(condition interface{}, value interface{}) error {
 }
 func (db *Database) Find(condition interface{}, value interface{}) error {
 	err := db.DB.Find(value, condition).Error
+	if gorm.IsRecordNotFoundError(err) {
+		return nil
+	}
+	return err
+}
+func (db *Database) FindWithPagination(condition interface{}, offset int, pageSize int, value interface{}) error {
+	err := db.DB.Offset(offset).Limit(pageSize).Find(value, condition).Error
 	if gorm.IsRecordNotFoundError(err) {
 		return nil
 	}

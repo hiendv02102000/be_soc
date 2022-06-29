@@ -47,7 +47,8 @@ func UploadImageToCloud(file io.Reader, id_file string, width int, height int) (
 }
 
 func UploadFile(file io.Reader, id_file string) (url string, err error) {
-	cld, err := cloudinary.NewFromParams("hfbryanqg", "813372748842467", "IReNAP12GJOEbPay753ynjrQnS4")
+	//cld, err := cloudinary.NewFromParams("hfbryanqg", "813372748842467", "IReNAP12GJOEbPay753ynjrQnS4")
+	cld, err := cloudinary.NewFromParams("dtctadira", "658231379476276", "c8yMID5XRYNirCK5jjCCzuj0HE0")
 	if err != nil {
 		return
 	}
@@ -56,9 +57,7 @@ func UploadFile(file io.Reader, id_file string) (url string, err error) {
 	res, err := cld.Upload.Upload(ctx, file, uploader.UploadParams{PublicID: publicId,
 		Transformation: "c_crop,g_center/q_auto/f_auto", Tags: []string{"docx"}})
 	url = res.URL
-	fmt.Println(res)
 	return
-
 }
 
 // func GetURLFile(id_file string) (url string, err error) {

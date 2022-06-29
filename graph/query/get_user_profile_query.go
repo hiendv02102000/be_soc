@@ -39,7 +39,7 @@ func GetUserProfileQuery(containerRepo map[string]interface{}) *graphql.Field {
 			userNovel, err := novelRepo.FindNovelList(entity.Novels{
 				UsersID: user.ID,
 			})
-			fmt.Println(userNovel)
+			//fmt.Println(userNovel)
 			novels := make([]map[string]interface{}, 0)
 			for _, n := range userNovel {
 
