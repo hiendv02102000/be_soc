@@ -31,18 +31,11 @@ func (h *HTTPHandler) Handle(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, data)
 		return
 	}
-
-	exce := ""
-	if len(req.Query) > 0 {
-		exce = req.Query
-	} else {
-		exce = req.Mutation
-	}
-
 	data := graphql.Do(graphql.Params{
-		Context:       c,
-		Schema:        *h.Schema,
-		RequestString: exce,
+		Context:        c,
+		Schema:         *h.Schema,
+		RequestString:  req.Query,
+		VariableValues: req.Variables,
 	})
 	code := http.StatusOK
 	if len(data.Errors) > 0 {
@@ -54,5 +47,5 @@ func (h *HTTPHandler) Handle(c *gin.Context) {
 		Result: data.Data,
 	}
 
-	c.JSON(http.StatusOK, resp)
+	c.JSON(code, resp)
 }
